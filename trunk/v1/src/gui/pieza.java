@@ -10,21 +10,20 @@ import java.awt.Color;
  *
  * @author Rodrigo
  */
-public class pieza extends javax.swing.JLabel {
+public class pieza extends javax.swing.JButton {
 
     private int tipo;
     private int xpos;
     private int ypos;
     private int ocupa;
+    private Color color;
 
-    public pieza(int color) {
+    public pieza() {
+    }
 
-        if (color == 0) {
-            this.setBackground(Color.WHITE);
-        } else {
-            this.setBackground(Color.BLACK);
-        }
-        // this.setBounds(x, y, tipo, tipo);
+    public void setValues(){
+        this.setBackground(getColor());
+        this.setBounds(getXpos(), getYpos(), 50, 50);
     }
 
     public int getOcupa() {
@@ -57,5 +56,13 @@ public class pieza extends javax.swing.JLabel {
 
     public void setYpos(int ypos) {
         this.ypos = ypos;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

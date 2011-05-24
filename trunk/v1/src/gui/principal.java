@@ -19,7 +19,7 @@ import java.awt.Color;
 public class principal extends javax.swing.JFrame {
 
     private pieza[][] tGui = new pieza[8][8];
-    private int tLogico[][];
+    private int tLogico[][] = new int[8][8];
 
     /** Creates new form principal */
     public principal() {
@@ -28,12 +28,12 @@ public class principal extends javax.swing.JFrame {
     }
 
     private void makeTablero() {
-
+        pieza temp;
         for (int j = 0; j < 8; j++) {
             for (int i = 0; i < 8; i++) {
-                pieza temp = new pieza();
-                temp.setXpos(i * 25);
-                temp.setYpos(j * 25);
+                temp = new pieza();
+                temp.setXpos(i * 50);
+                temp.setYpos(j * 50);
                 if ((i + j) % 2 == 0) {
                     temp.setColor(Color.BLACK);
                 } else {
@@ -41,9 +41,26 @@ public class principal extends javax.swing.JFrame {
                 }
                 temp.setValues();
                 tGui[j][i] = temp;
-                this.add(tGui[j][i]);
+                this.pnl_tablero.add(tGui[j][i]);
             }
         }
+        initTableros();
+    }
+
+    private void initTableros() {
+        for (int j = 0; j < 8; j++) {
+            for (int i = 0; i < 8; i++) {
+               // tLogico[j][i]=;
+            }
+        }
+    }
+    
+    private void paintPieza(){
+        
+    }
+
+    private void repaintPiezas(){
+
     }
 
     /** This method is called from within the constructor to
@@ -60,18 +77,18 @@ public class principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ajedrez");
 
-        pnl_tablero.setBorder(javax.swing.BorderFactory.createTitledBorder("Tablero"));
+        pnl_tablero.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnl_tablero.setPreferredSize(new java.awt.Dimension(400, 400));
 
         javax.swing.GroupLayout pnl_tableroLayout = new javax.swing.GroupLayout(pnl_tablero);
         pnl_tablero.setLayout(pnl_tableroLayout);
         pnl_tableroLayout.setHorizontalGroup(
             pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
         pnl_tableroLayout.setVerticalGroup(
             pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
