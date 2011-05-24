@@ -10,11 +10,16 @@
  */
 package gui;
 
+import java.awt.Color;
+
 /**
  *
  * @author Rodrigo
  */
 public class principal extends javax.swing.JFrame {
+
+    private pieza[][] tGui = new pieza[8][8];
+    private int tLogico[][];
 
     /** Creates new form principal */
     public principal() {
@@ -22,16 +27,21 @@ public class principal extends javax.swing.JFrame {
         makeTablero();
     }
 
-    public void makeTablero() {
-        
+    private void makeTablero() {
+
         for (int j = 0; j < 8; j++) {
             for (int i = 0; i < 8; i++) {
-                if ((i + j) % 2 == 0) { //si la suma //fila+columna es par entonces pinta de negro
-                  //  fill(0);
+                pieza temp = new pieza();
+                temp.setXpos(i * 25);
+                temp.setYpos(j * 25);
+                if ((i + j) % 2 == 0) {
+                    temp.setColor(Color.BLACK);
                 } else {
-                    //fill(255);
+                    temp.setColor(Color.WHITE);
                 }
-                //rect(i * 25, j * 25, 25, 25);
+                temp.setValues();
+                tGui[j][i] = temp;
+                this.add(tGui[j][i]);
             }
         }
     }
@@ -45,21 +55,22 @@ public class principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnl_tablero = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ajedrez");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tablero"));
-        jPanel1.setPreferredSize(new java.awt.Dimension(400, 400));
+        pnl_tablero.setBorder(javax.swing.BorderFactory.createTitledBorder("Tablero"));
+        pnl_tablero.setPreferredSize(new java.awt.Dimension(400, 400));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnl_tableroLayout = new javax.swing.GroupLayout(pnl_tablero);
+        pnl_tablero.setLayout(pnl_tableroLayout);
+        pnl_tableroLayout.setHorizontalGroup(
+            pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 388, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnl_tableroLayout.setVerticalGroup(
+            pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 373, Short.MAX_VALUE)
         );
 
@@ -69,20 +80,20 @@ public class principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_tablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(281, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnl_tablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel pnl_tablero;
     // End of variables declaration//GEN-END:variables
 }
