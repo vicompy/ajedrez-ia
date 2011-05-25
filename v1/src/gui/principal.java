@@ -11,6 +11,15 @@
 package gui;
 
 import java.awt.Color;
+import ajedrez.constantes;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,10 +29,12 @@ public class principal extends javax.swing.JFrame {
 
     private pieza[][] tGui = new pieza[8][8];
     private int tLogico[][] = new int[8][8];
+    private constantes c = new constantes();
 
     /** Creates new form principal */
     public principal() {
         initComponents();
+        this.setLocationRelativeTo(null);
         makeTablero();
     }
 
@@ -48,19 +59,78 @@ public class principal extends javax.swing.JFrame {
     }
 
     private void initTableros() {
-        for (int j = 0; j < 8; j++) {
-            for (int i = 0; i < 8; i++) {
-               // tLogico[j][i]=;
+        int j = 0;
+        int i = 0;
+
+        //tablero logico inicial
+
+        //piezas negras
+        tLogico[0][0] = c.bTORRE;
+        tLogico[0][1] = c.bCABALLO;
+        tLogico[0][2] = c.bALFIL;
+        tLogico[0][3] = c.bREINA;
+        tLogico[0][4] = c.bREY;
+        tLogico[0][5] = c.bALFIL;
+        tLogico[0][6] = c.bCABALLO;
+        tLogico[0][7] = c.bTORRE;
+
+        for (i = 0; i < 8; i++) {
+            tLogico[1][i] = c.bPEON;
+        }
+
+        //casillas vacias
+        for (j = 2; j < 6; j++) {
+            for (i = 0; i < 8; i++) {
+                tLogico[j][i] = c.CASILLA_VACIA;
             }
         }
-    }
-    
-    private void paintPieza(){
-        
+
+        //piezas balncas
+        tLogico[7][0] = c.wTORRE;
+        tLogico[7][1] = c.wCABALLO;
+        tLogico[7][2] = c.wALFIL;
+        tLogico[7][3] = c.wREINA;
+        tLogico[7][4] = c.wREY;
+        tLogico[7][5] = c.wALFIL;
+        tLogico[7][6] = c.wCABALLO;
+        tLogico[7][7] = c.wTORRE;
+
+        for (i = 0; i < 8; i++) {
+            tLogico[6][i] = c.wPEON;
+        }
+
+//         for (int x = 0; x < 8; x++) {
+//            for (int y = 0; y < 8; y++) {
+//                System.out.println("X: "+x+", Y: "+y+", VAL: "+tLogico[x][y]);
+//             }
+//            }
+        repaintPiezas(tLogico);
     }
 
-    private void repaintPiezas(){
+    private void paintPieza(int x, int y, int tipo) {
 
+        if (tipo != c.CASILLA_VACIA) {
+            ImageIcon icon = null;
+            System.out.println("TIPO: "+tipo+", X:"+x+", Y:"+y);
+            icon = new ImageIcon(this.getClass().getResource("/resources/images/" + tipo + ".gif"));
+            tGui[x][y].setBackground(null);
+            tGui[x][y].setIcon(icon);
+        } else {
+            tGui[x][y].setIcon(null);
+            tGui[x][y].setValues();
+        }
+    }
+
+    private void repaintPiezas(int mtablero[][]) {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (mtablero[x][y] == c.CASILLA_VACIA) {
+                    paintPieza(x, y, c.CASILLA_VACIA);
+                } else {
+                    paintPieza(x, y, mtablero[x][y]);
+                }
+            }
+        }
     }
 
     /** This method is called from within the constructor to
@@ -84,11 +154,11 @@ public class principal extends javax.swing.JFrame {
         pnl_tablero.setLayout(pnl_tableroLayout);
         pnl_tableroLayout.setHorizontalGroup(
             pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGap(0, 596, Short.MAX_VALUE)
         );
         pnl_tableroLayout.setVerticalGroup(
             pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGap(0, 596, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -5,18 +5,31 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 /**
  *
  * @author Rodrigo
  */
-public class pieza extends javax.swing.JButton {
+public class pieza extends javax.swing.JButton implements ActionListener {
 
     private int tipo;
     private int xpos;
     private int ypos;
     private int ocupa;
     private Color color;
+    private Image imagen;
+
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
+    }
 
     public pieza() {
     }
@@ -24,6 +37,10 @@ public class pieza extends javax.swing.JButton {
     public void setValues(){
         this.setBackground(getColor());
         this.setBounds(getXpos(), getYpos(), 50, 50);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        JButton temp = (JButton) e.getSource() ;
     }
 
     public int getOcupa() {
