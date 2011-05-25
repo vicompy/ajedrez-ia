@@ -15,7 +15,7 @@ public class nodoTablero {
     private nodoTablero[] movimientos;
     private int funcionUtilidad;
     private int turno;
-    private boolean esTerminal;//true si es hoja
+    public boolean esTerminal;//true si es hoja
     public nodoTablero(){
         inicializarTablero();
     }

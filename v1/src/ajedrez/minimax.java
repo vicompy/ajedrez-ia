@@ -19,7 +19,7 @@ public class minimax {
      *              de lo contrario si tira MAX sera <strong>true</strong>
      *  @return retorna el tiro que le corresponde al nodo actual
      */
-    public void MaxMin(nodoTablero actual, boolean MAX)
+    public void MaxMin(nodoTablero actual, boolean MAX, int pieza)
     {
         
     }
@@ -43,6 +43,58 @@ public class minimax {
         return movimiento;
     }
 
+    public int valorMAX(nodoTablero actual, nodoTablero hijos[])
+    {
+        int vmax = 0;
+
+        if(actual.esTerminal){
+            return getUtility(actual);
+        }
+        else{
+            vmax = -100000;
+        }
+
+        int size = hijos.length;
+
+        for(int i = 0; i < size; i++)
+        {
+            
+        }
+
+        return vmax;
+    }
+
+    public int valorMIN(nodoTablero actual, nodoTablero hijos[])
+    {
+        int vmin = 0;
+
+        if(actual.esTerminal){
+            return getUtility(actual);
+        }
+        else{
+            vmin = 100000;
+        }
+        
+        return vmin;
+    }
+
+    /** Este metodo sirve para calcular la utlidad del nodo
+     *  @param actual es el nodo actual al que se le sacara
+     *                la utilidad
+     *  @return retorna la utilidad del nodo
+     */
+    public int getUtility(nodoTablero actual)
+    {
+        int utility = 0;
+        int tablero[][] = actual.posicionPiezas;
+
+        //aqui a quien le toco la heuristica tiene que calcular
+        //la utlidad que consiste en una sencilla resta:
+        //la cantidad de posibilidades de ganar del Humano
+        //menos la cantida de ganar de la maquina
+
+        return utility;
+    }
     /** Metodo que se encarga de devolver todos los hijos
      *  para el nodo actual
      *  @param tablero es el tablero sobre el cual nos basaremos
