@@ -33,7 +33,7 @@ public class minimax {
 
         int cantidad = actual.getFreeSpaces();
 
-        move_possible(movimiento, cantidad, pieza);
+        nodoTablero hijos[] = move_possible(movimiento, cantidad, pieza);
 
         for(int i = 0; i < cantidad; i++)
         {
