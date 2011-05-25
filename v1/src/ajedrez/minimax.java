@@ -24,7 +24,7 @@ public class minimax {
         
     }
 
-    public int[][] init_MAX(nodoTablero actual)
+    public int[][] init_MAX(nodoTablero actual, int pieza)
     {
         int[][] movimiento = new int[8][8];
         int max, maxc; max = maxc = 0;
@@ -33,7 +33,7 @@ public class minimax {
 
         int cantidad = actual.getFreeSpaces();
 
-        move_possible(movimiento, cantidad, maxc);
+        move_possible(movimiento, cantidad, pieza);
 
         for(int i = 0; i < cantidad; i++)
         {
