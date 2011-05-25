@@ -30,4 +30,7 @@ public class constantes {
     //turno de juego
     public final int PC = 11;
     public final int HUMANO = 12;
+
+    public constantes(){
+    }
 }
