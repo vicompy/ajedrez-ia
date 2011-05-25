@@ -11,7 +11,7 @@ package ajedrez;
  */
 public class nodoTablero {
 
-    private int[][] posicionPiezas = new int[8][8];
+    public int[][] posicionPiezas = new int[8][8];
     private nodoTablero[] movimientos;
     private int funcionUtilidad;
     private int turno;
@@ -62,5 +62,24 @@ public class nodoTablero {
 
     public int getPieza(int posX, int posY){
         return posicionPiezas[posX][posY];
+    }
+
+    public int getFreeSpaces() {
+
+        int free_spaces = 0;
+        int tablero[][] = this.posicionPiezas;
+
+        for(int x = 0; x < 8; x++)
+        {
+            for(int y = 0; y < 8; y++)
+            {
+                if(tablero[x][y] == 0)
+                {
+                    free_spaces++;
+                }
+            }
+        }
+
+        return free_spaces;
     }
 }
