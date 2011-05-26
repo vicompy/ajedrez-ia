@@ -11,6 +11,37 @@ package ajedrez;
  */
 public class minimax {
 
+    /** Este metodo construye el arbol
+     *
+     *  @param raiz es el nodo raiz sobre el cual nos hemos de basar para
+     *              armar el arbol
+     *  @param turn es para ver el turno (a quien le toca) esto se maneja asi:
+     *              si tiran las blancas es <strong>true</strong>, si son
+     *              negras entonces es <strong>false</strong>
+     */
+    public void BuildTree(nodoTablero raiz, boolean turn)
+    {   
+        raiz.movimientos = raiz.getMovsValid(raiz, turn);
+        int size_second_level = raiz.movimientos.length;
+
+        //for para construir el segundo nivel basadonos en el primero
+        for(int i = 0; i < size_second_level; i++)
+        {
+            nodoTablero level_two = raiz.movimientos[i];
+
+            level_two.movimientos = level_two.getMovsValid(raiz, !turn);
+            int size_third_level = level_two.movimientos.length;
+
+            //for para construir el tercer nivel basandonos en el segundo
+            for(int j = 0; j < size_third_level; j++)
+            {
+                nodoTablero level_three = level_two.movimientos[j];
+                level_three.movimientos = level_three.getMovsValid(raiz, turn);
+            }
+        }
+    }
+
+    
 
     /** Metodo que MinMax que devuelve el movimiento
      *  Actual despues de generar sus nodos hijos

@@ -12,12 +12,14 @@ package ajedrez;
 public class nodoTablero {
 
     public int[][] posicionPiezas = new int[8][8];
-    private nodoTablero[] movimientos;
+    public nodoTablero padre;
+    public nodoTablero[] movimientos;
     private int funcionUtilidad;
     private int turno;
     public boolean esTerminal;//true si es hoja
     public nodoTablero(){
         inicializarTablero();
+        padre = null;
     }
 
     public void setFuncionUtilidad(int func){
@@ -81,5 +83,36 @@ public class nodoTablero {
         }
 
         return free_spaces;
+    }
+
+    /** Metodo que se utiliza para construir todos los hijos
+     *  esto es, los tiros posibles que se pueden hacer en base
+     *  al jugador que le toque
+     *
+     *  @param raiz es el nodo raiz sobre el cual se tomara el criterio
+     *              para hacer todos los hijos (tiros posibles)
+     *  @param turn es el turno del jugador al que le toca tirar
+     *              en esto nos basamos para armar los hijos
+     *              si fuese <strong>true</strong> entonces se arman los
+     *              hijos para las piezas blancas
+     *              en caso sea <strong>false</strong> entonces se arman
+     *              los hijos para las piezas negras
+     *  @return retorna los hijos basados en el nodo <strong>raiz</strong>
+     *          y en el <strong>turno</strong> del jugador
+     */
+    public nodoTablero[] getMovsValid(nodoTablero raiz, boolean turn)
+    {
+        //tiran las blancas
+        if(turn)
+        {
+            ///aqui se crea el nivel y se retorna
+        }
+        //tiran las negras
+        else
+        {
+            ///aqui se crea el nivel y se retorna
+        }
+
+        return null;
     }
 }
