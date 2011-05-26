@@ -11,7 +11,33 @@ package ajedrez;
  */
 public class heuristica {
 
-    public boolean validaPeon(int oX, int oY, int dX, int dY, int[][] tablero){
+    int oX, oY, dX, dY;
+    int tablero[][];
+
+    public heuristica(){
+        
+    }
+
+    public boolean getValidacionPieza(int oX, int oY, int dX, int dY, int[][] tablero, int tipoPieza){
+        this.oX = oX;
+        this.oY = oY;
+        this.dX = dX;
+        this.dY = dY;
+        this.tablero = tablero;
+        switch(tipoPieza){
+            case 1:
+            case -1:
+                return validaPeon();
+            case 4:
+            case -4:
+                return validaTorre();
+
+        }
+        return false;
+    }
+
+   // public boolean validaPeon(int oX, int oY, int dX, int dY, int[][] tablero){
+     private boolean validaPeon(){
         boolean resultado = false;
         int pieza = tablero[oX][oY];
         if(pieza > 0)
@@ -49,7 +75,8 @@ public class heuristica {
         return resultado;
     }
 
-    public boolean validaTorre(int oX, int oY, int dX, int dY, int[][] tablero){
+    //public boolean validaTorre(int oX, int oY, int dX, int dY, int[][] tablero){
+     public boolean validaTorre(){
         boolean resultado = true;
         int pieza = tablero[oX][oY];
         if(pieza > 0)
@@ -105,7 +132,56 @@ public class heuristica {
             else if(oX == dX && oY != dY){
                 //se mueve verticalmente
             }
-            
+            if(oX != dX && oY == dY){
+                //se mueve horizontalmente
+                if(dX > oX){
+                    //desplazamiento hacia abajo
+                    for(int i = oX + 1; i < dX; i++){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][dY] != 10){
+                            resultado = false;
+                        }
+                    }
+                    //verificar si la casilla destino esta ocupada
+                    if(tablero[dX][dY] == 10){
+                        //la casilla esta vacia
+                        resultado = resultado && true;
+                    }
+                    else if(tablero[dX][dY] < 0){
+                        //la casilla tiene una pieza oponente
+                        resultado = resultado && true;
+                    }
+                    else{
+                        //la casilla esta ocupada por una pieza propia
+                        resultado = false;
+                    }
+                }
+                else{
+                    //desplazamiento hacia arriba
+                    for(int i = oX - 1; i > dX; i--){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][dY] != 10){
+                            resultado = false;
+                        }
+                    }
+                    //verificar si la casilla destino esta ocupada
+                    if(tablero[dX][dY] == 10){
+                        //la casilla esta vacia
+                        resultado = resultado && true;
+                    }
+                    else if(tablero[dX][dY] < 0){
+                        //la casilla tiene una pieza oponente
+                        resultado = resultado && true;
+                    }
+                    else{
+                        //la casilla esta ocupada por una pieza propia
+                        resultado = false;
+                    }
+                }
+            }
+            else if(oX == dX && oY != dY){
+                //se mueve verticalmente
+            }
             if(dX == oX - 1 && dY == oY){
                 //se mueve una casilla hacia arriba
                 resultado = true;
