@@ -28,10 +28,18 @@ public class heuristica {
             case 1:
             case -1:
                 return validaPeon();
+            case 2:
+            case -2:
+                return validaCaballo();
+            case 3:
+            case -3:
+                return validaAlfil();
             case 4:
             case -4:
                 return validaTorre();
-
+            case 5:
+            case -5:
+                return validaReina();
         }
         return false;
     }
@@ -76,7 +84,7 @@ public class heuristica {
     }
 
     //public boolean validaTorre(int oX, int oY, int dX, int dY, int[][] tablero){
-     public boolean validaTorre(){
+     private boolean validaTorre(){
         boolean resultado = false;
         int pieza = tablero[oX][oY];
         if(pieza > 0)
@@ -204,18 +212,181 @@ public class heuristica {
         return resultado;
     }
 
-    public boolean validaAlfil(){
+    private boolean validaAlfil(){
         boolean resultado = false;
+        int pieza = tablero[oX][oY];
+        if(pieza > 0)
+        {
+            //es una pieza blanca
+            if(oX != dX && oY != dY){
+                //se mueve diagonalmente
+                resultado = true;
+                if(dX > oX && dY > oY){
+                    //desplazamiento hacia diagonal abajo derecha
+                    for(int i = oX + 1, j = oY + 1; i < dX && j < dY; i++, j++){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+                else if(dX < oX && dY > oY){
+                    //desplazamiento hacia diagonal arriba derecha
+                    for(int i = oX - 1, j = oY + 1; i > dX && j < dY; i--, j++){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+                else if(dX < oX && dY < oY){
+                    //desplazamiento hacia diagonal arriba izquierda
+                    for(int i = oX - 1, j = oY - 1; i > dX && j > dY; i--, j--){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+                else if(dX > oX && dY < oY){
+                    //desplazamiento hacia diagonal abajo izquierda
+                    for(int i = oX + 1, j = oY - 1; i < dX && j > dY; i++, j--){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            //verificar si la casilla destino esta ocupada
+            if(tablero[dX][dY] == 10){
+                //la casilla esta vacia
+                resultado = resultado && true;
+            }
+            else if(tablero[dX][dY] < 0){
+                //la casilla tiene una pieza oponente
+                resultado = resultado && true;
+            }
+            else{
+                //la casilla esta ocupada por una pieza propia
+                resultado = false;
+            }
+        }
+        else
+        {
+            //es una pieza negra
+            if(oX != dX && oY != dY){
+                //se mueve diagonalmente
+                resultado = true;
+                if(dX > oX && dY > oY){
+                    //desplazamiento hacia diagonal abajo derecha
+                    for(int i = oX + 1, j = oY + 1; i < dX && j < dY; i++, j++){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+                else if(dX < oX && dY > oY){
+                    //desplazamiento hacia diagonal arriba derecha
+                    for(int i = oX - 1, j = oY + 1; i > dX && j < dY; i--, j++){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+                else if(dX < oX && dY < oY){
+                    //desplazamiento hacia diagonal arriba izquierda
+                    for(int i = oX - 1, j = oY - 1; i > dX && j > dY; i--, j--){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+                else if(dX > oX && dY < oY){
+                    //desplazamiento hacia diagonal abajo izquierda
+                    for(int i = oX + 1, j = oY - 1; i < dX && j > dY; i++, j--){
+                        //verificar si las casillas intermedias estan libres
+                        if(tablero[i][j] != 10){
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+            //verificar si la casilla destino esta ocupada
+            if(tablero[dX][dY] == 10){
+                //la casilla esta vacia
+                resultado = resultado && true;
+            }
+            else if(tablero[dX][dY] > 0 && tablero[dX][dY] != 10){
+                //la casilla tiene una pieza oponente
+                resultado = resultado && true;
+            }
+            else{
+                //la casilla esta ocupada por una pieza propia
+                resultado = false;
+            }
+        }
         return resultado;
     }
 
-    public boolean validaCaballo(){
+    private boolean validaCaballo(){
         boolean resultado = false;
+        int pieza = tablero[oX][oY];
+        if((dX == oX - 1 && dY == oY - 2) ||
+                (dX == oX - 2 && dY == oY - 1) ||
+                (dX == oX - 2 && dY == oY + 1) ||
+                (dX == oX - 1 && dY == oY + 2) ||
+                (dX == oX + 1 && dY == oY + 2) ||
+                (dX == oX + 2 && dY == oY + 1) ||
+                (dX == oX + 2 && dY == oY - 1) ||
+                (dX == oX + 1 && dY == oY - 2)){
+            //el movimiento en L del caballo es valido
+            resultado = true;
+            if(pieza > 0)
+            {
+                //es una pieza blanca
+                //verificar si la casilla destino esta ocupada
+                if(tablero[dX][dY] == 10){
+                    //la casilla esta vacia
+                    resultado = resultado && true;
+                }
+                else if(tablero[dX][dY] < 0){
+                    //la casilla tiene una pieza oponente
+                    resultado = resultado && true;
+                }
+                else{
+                    //la casilla esta ocupada por una pieza propia
+                    resultado = false;
+                }
+            }
+            else
+            {
+                //es una pieza negra
+                //verificar si la casilla destino esta ocupada
+                if(tablero[dX][dY] == 10){
+                    //la casilla esta vacia
+                    resultado = resultado && true;
+                }
+                else if(tablero[dX][dY] > 0 && tablero[dX][dY] != 10){
+                    //la casilla tiene una pieza oponente
+                    resultado = resultado && true;
+                }
+                else{
+                    //la casilla esta ocupada por una pieza propia
+                    resultado = false;
+                }
+            }
+        }
+        
         return resultado;
     }
 
-    public boolean validaReina(){
+    private boolean validaReina(){
         boolean resultado = false;
+        resultado = validaAlfil() || validaTorre();
         return resultado;
     }
 
