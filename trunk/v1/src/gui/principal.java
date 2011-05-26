@@ -11,7 +11,7 @@
 package gui;
 
 import java.awt.Color;
-import ajedrez.constantes;
+import ajedrez.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -29,6 +29,8 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     private boolean release = false;
     private int oX, oY, dX, dY;
     private int tipoO;
+
+    private heuristica heu = new heuristica();
 
     /** Creates new form principal */
     public principal() {
@@ -172,7 +174,8 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             dX = temp.getXposT();
             dY = temp.getYposT();
 
-            if((tLogico[dX][dY]==c.CASILLA_VACIA) && true){ //revisa si el movimiento es valido
+            if((tLogico[dX][dY]==c.CASILLA_VACIA) &&
+                    heu.getValidacionPieza(oX, oY, dX, dY, tLogico, tipoO)){ //revisa si el movimiento es valido
                 //System.out.println("oX "+oX+", oY "+oY);
                 //System.out.println("dX "+dX+", dY "+dY);
                 tLogico[oX][oY] = c.CASILLA_VACIA;
