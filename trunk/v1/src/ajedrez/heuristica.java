@@ -406,6 +406,25 @@ public class heuristica {
         return resultado;
     }
 
+    /** Este metodo sirve para calcular la utilidad de todos los hijos
+     *  de una raiz en particular para finalmente recoger la mejor
+     *  opcion segun el criterio que se aplique (MAX o MIN)
+     *
+     *  @param raiz es el nodo que recibira la utilidad que mas
+     *              convenga segun MIN o MAX
+     *  @param hijos son los hijos que le pertenecen al nodo raiz en
+     *               particular
+     */
+    public void ApplyUtility(nodoTablero raiz, nodoTablero hijos[])
+    {
+        //La utilidad sera calculada para todos los hijos
+        //luego subira segun sea el critero (MAX o MIN) la utilidad
+        //para determinar si se trata de nodos terminales los hijos solo visitar
+        //la variable esTerminal y con eso basta.
+        //si llegase a ser terminal entonces se aplica la funcion utilidad
+        //de lo contrario solo se hereda la utilidad segun criterio MIN o MAX
+    }
+
     private boolean validaReina(){
         boolean resultado = false;
         resultado = validaAlfil() || validaTorre();
