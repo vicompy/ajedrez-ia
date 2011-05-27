@@ -18,8 +18,25 @@ public class heuristica {
         
     }
 
-    public int funcEvaluacion(int pieza){
-        return pieza;
+    public int funcEvaluacion(int tablero[][]){
+        int pieza=0;
+        int cBlancas=0;
+        int cNegras= 0;
+        for (int i=1; i<8; i++){
+            for (int j=1; j<8; j++){
+                pieza = tablero[i][j];
+                if(pieza > 0)
+                {
+                    //es una pieza blanca
+                    cBlancas=cBlancas+1;
+                }else{
+                    cNegras=cNegras+1;
+                }
+            }
+        }
+        
+        int Utilidad =(cBlancas-cNegras)/(cBlancas+cNegras);
+        return Utilidad;
     }
 
 
