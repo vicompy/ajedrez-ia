@@ -92,6 +92,10 @@ public class minimax {
             hijos[0].movimientos[0].esTerminal = true;
             value.ApplyUtility(hijos[0], hijos[0].movimientos);
         }
+        else
+        {
+            value.ApplyUtility(hijos[0], hijos[0].movimientos);
+        }
 
         for(int i = 1; i < hijos.length; i++)
         {
