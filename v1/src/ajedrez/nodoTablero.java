@@ -14,12 +14,13 @@ public class nodoTablero {
     public int[][] posicionPiezas = new int[8][8];
     public nodoTablero padre;
     public nodoTablero[] movimientos;
-    private int funcionUtilidad;
+    public int funcionUtilidad;
     public boolean turno;
     public boolean esTerminal;//true si es hoja
     public nodoTablero(){
         inicializarTablero();
         padre = null;
+        esTerminal = false;
     }
 
     public void setFuncionUtilidad(int func){
