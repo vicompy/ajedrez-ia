@@ -13,13 +13,12 @@ package ajedrez;
 public class minimax {
 
 
-    private int to_down, size, control;
+    private int to_down, size;
     private boolean turn;
 
     public minimax(boolean turn, nodoTablero raiz, int dificultad)
     {
         to_down = size = 0;
-        control = -1;
         this.turn = turn;
         BuildTree(raiz, dificultad);
     }
@@ -41,8 +40,7 @@ public class minimax {
 
         for(int i = 0; i < size; i++)
         {
-            BuildLevels(raiz, raiz.movimientos);
-            control++;
+            BuildLevels(raiz.movimientos[i], raiz.movimientos);
             to_down = dificultad*3 - 1;
         }
     }
@@ -72,12 +70,12 @@ public class minimax {
         {
             turn = !turn;
 
-            hijos[control].movimientos = hijos[control].getMovsValid(raiz, turn);
-            hijos[control].turno = freeTurn(turn);
+            hijos[0].movimientos = hijos[0].getMovsValid(raiz, turn);
+            hijos[0].turno = freeTurn(turn);
 
             to_down--;
 
-            BuildLevels(hijos[control], hijos[control].movimientos);
+            BuildLevels(hijos[0], hijos[0].movimientos);
         }
         
         for(int i = 1; i < hijos.length; i++)
