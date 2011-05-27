@@ -5,40 +5,87 @@
 
 package ajedrez;
 
+
 /**
  *
  * @author William
  */
 public class minimax {
 
+
+    private int to_down, size, control;
+    private boolean turn;
+
+    public minimax(boolean turn, nodoTablero raiz, int dificultad)
+    {
+        to_down = size = 0;
+        control = -1;
+        this.turn = turn;
+        BuildTree(raiz, dificultad);
+    }
+
+    /** Este metodo configura la creacion del arbol
+     *
+     *  @param raiz es la raiz del arbol a construir
+     *  @param dificultad para ver la dificultad del juego, si es 1 la
+     *                    dificultad es <strong>Dificil</strong>, si es 2
+     *                    la dificultad es <strong>Medio</strong> y si es 3
+     *                    la dificultad es <strong>Facil</strong>
+     */
+    public void BuildTree(nodoTablero raiz, int dificultad)
+    {
+        to_down = dificultad*3 - 1;
+        size = dificultad*3;
+        raiz.movimientos = raiz.getMovsValid(raiz, turn);
+        raiz.turno = freeTurn(turn);
+
+        for(int i = 0; i < size; i++)
+        {
+            BuildLevels(raiz, raiz.movimientos);
+            control++;
+            to_down = dificultad*3 - 1;
+        }
+    }
+
+    /** Metodo para liberar la variable turno
+     *
+     *  @param turn es el turno a liberar
+     *
+     *  @return retorna la variable turno ya liberada
+     */
+    public boolean freeTurn(boolean turn)
+    {
+        boolean pturn = turn;
+
+        return pturn;
+    }
+
     /** Este metodo construye el arbol
      *
-     *  @param raiz es el nodo raiz sobre el cual nos hemos de basar para
-     *              armar el arbol
-     *  @param turn es para ver el turno (a quien le toca) esto se maneja asi:
-     *              si tiran las blancas es <strong>true</strong>, si son
-     *              negras entonces es <strong>false</strong>
+     *  @param raiz es el nodo raiz sobre el cual se construye el arbol
+     *
+     *  @param hijos son los hijos del nodo raiz
      */
-    public void BuildTree(nodoTablero raiz, boolean turn)
-    {   
-        raiz.movimientos = raiz.getMovsValid(raiz, turn);
-        int size_second_level = raiz.movimientos.length;
-
-        //for para construir el segundo nivel basadonos en el primero
-        for(int i = 0; i < size_second_level; i++)
+    public void BuildLevels(nodoTablero raiz, nodoTablero[] hijos)
+    {
+        if(to_down > 1)
         {
-            nodoTablero level_two = raiz.movimientos[i];
+            turn = !turn;
 
-            level_two.movimientos = level_two.getMovsValid(raiz, !turn);
-            int size_third_level = level_two.movimientos.length;
+            hijos[control].movimientos = hijos[control].getMovsValid(raiz, turn);
+            hijos[control].turno = freeTurn(turn);
 
-            //for para construir el tercer nivel basandonos en el segundo
-            for(int j = 0; j < size_third_level; j++)
-            {
-                nodoTablero level_three = level_two.movimientos[j];
-                level_three.movimientos = level_three.getMovsValid(raiz, turn);
-            }
+            to_down--;
+
+            BuildLevels(hijos[control], hijos[control].movimientos);
         }
+        
+        for(int i = 1; i < hijos.length; i++)
+        {
+            hijos[i].movimientos = hijos[i].getMovsValid(raiz, freeTurn(hijos[0].turno));
+        }
+        
+
     }
 
     
