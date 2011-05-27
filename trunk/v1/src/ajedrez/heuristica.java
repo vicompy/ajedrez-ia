@@ -18,6 +18,11 @@ public class heuristica {
         
     }
 
+    public int funcEvaluacion(int pieza){
+        return pieza;
+    }
+
+
     public boolean getValidacionPieza(int oX, int oY, int dX, int dY, int[][] tablero, int tipoPieza){
         this.oX = oX;
         this.oY = oY;
