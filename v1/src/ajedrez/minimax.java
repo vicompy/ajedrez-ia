@@ -15,11 +15,13 @@ public class minimax {
 
     private int to_down, size;
     private boolean turn;
+    private boolean step;
 
     public minimax(boolean turn, nodoTablero raiz, int dificultad)
     {
         to_down = size = 0;
         this.turn = turn;
+        step = true;
         BuildTree(raiz, dificultad);
     }
 
@@ -33,15 +35,19 @@ public class minimax {
      */
     public void BuildTree(nodoTablero raiz, int dificultad)
     {
-        to_down = dificultad*3 - 1;
+        to_down = dificultad*3 - 2;
         size = dificultad*3;
         raiz.movimientos = raiz.getMovsValid(raiz, turn);
         raiz.turno = freeTurn(turn);
 
         for(int i = 0; i < size; i++)
         {
-            BuildLevels(raiz.movimientos[i], raiz.movimientos);
-            to_down = dificultad*3 - 1;
+            raiz.movimientos[i].movimientos = raiz.
+                    getMovsValid(raiz.movimientos[i], !turn);
+            
+            BuildLevels(raiz.movimientos[i], raiz.movimientos[i].movimientos);
+            to_down = dificultad*3 - 2;
+            step = true;
         }
     }
 
@@ -82,7 +88,11 @@ public class minimax {
         {
             hijos[i].movimientos = hijos[i].getMovsValid(raiz, freeTurn(hijos[0].turno));
         }
-        
+
+        if(step){
+            hijos[0].movimientos = hijos[0].getMovsValid(raiz, turn);
+            step = false;
+        }
 
     }
 
