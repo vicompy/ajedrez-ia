@@ -15,7 +15,7 @@ public class nodoTablero {
     public nodoTablero padre;
     public nodoTablero[] movimientos;
     private int funcionUtilidad;
-    private int turno;
+    public boolean turno;
     public boolean esTerminal;//true si es hoja
     public nodoTablero(){
         inicializarTablero();
@@ -27,14 +27,6 @@ public class nodoTablero {
     }
     public int getFuncionUtilidad(){
         return funcionUtilidad;
-    }
-
-    public void setTurno(int turno){
-        this.turno = turno;
-    }
-
-    public int getTurno(){
-        return turno;
     }
 
     public nodoTablero[] getMovimientos(){
