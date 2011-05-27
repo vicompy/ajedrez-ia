@@ -174,7 +174,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             dX = temp.getXposT();
             dY = temp.getYposT();
 
-            if((tLogico[dX][dY]==c.CASILLA_VACIA) &&
+            if(/*(tLogico[dX][dY]==c.CASILLA_VACIA) &&*/
                     heu.getValidacionPieza(oX, oY, dX, dY, tLogico, tipoO)){ //revisa si el movimiento es valido
                 //System.out.println("oX "+oX+", oY "+oY);
                 //System.out.println("dX "+dX+", dY "+dY);

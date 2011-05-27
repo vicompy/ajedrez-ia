@@ -62,6 +62,9 @@ public class heuristica {
             case 5:
             case -5:
                 return validaReina();
+            case 6:
+            case -6:
+                return validaRey();
         }
         return false;
     }
@@ -240,7 +243,7 @@ public class heuristica {
         if(pieza > 0)
         {
             //es una pieza blanca
-            if(oX != dX && oY != dY){
+            if(Math.abs(dX - oX) == Math.abs(dY - oY)){
                 //se mueve diagonalmente
                 resultado = true;
                 if(dX > oX && dY > oY){
@@ -297,7 +300,7 @@ public class heuristica {
         else
         {
             //es una pieza negra
-            if(oX != dX && oY != dY){
+            if(Math.abs(dX - oX) == Math.abs(dY - oY)){
                 //se mueve diagonalmente
                 resultado = true;
                 if(dX > oX && dY > oY){
@@ -433,6 +436,66 @@ public class heuristica {
 
     public boolean validaRey(){
         boolean resultado = false;
+        int pieza = tablero[oX][oY];
+        if(dX == oX + 1 && dY == oY){
+            //se mueve hacia abajo
+            resultado = true;
+        }
+        else if(dX == oX - 1 && dY == oY){
+            //se mueve hacia arriba
+            resultado = true;
+        }
+        else if(dX == oX && dY == oY + 1){
+            //se mueve a la derecha
+            resultado = true;
+        }
+        else if(dX == oX && dY == oY - 1){
+            //se mueve a la izquierda
+            resultado = true;
+        }
+        else if(dX == oX - 1 && dY == oY + 1){
+            //se mueve en diagonal arriba derecha
+            resultado = true;
+        }
+        else if(dX == oX + 1 && dY == oY + 1){
+            //se mueve en diagonal abajo derecha
+            resultado = true;
+        }
+        else if(dX == oX + 1 && dY == oY - 1){
+            //se mueve en diagonal abajo izquierda
+            resultado = true;
+        }
+        else if(dX == oX - 1 && dY == oY - 1){
+            //se mueve en diagonal arriba izquierda
+            resultado = true;
+        }
+        if(pieza > 0)
+        {
+            //es una pieza blanca
+            //verificar si la casilla destino esta ocupada
+            if(tablero[dX][dY] == 10 || tablero[dX][dY] < 0){
+                //la casilla esta vacia o tiene una pieza oponente
+                resultado = resultado && true;
+            }
+            else{
+                //la casilla esta ocupada por una pieza propia
+                resultado = false;
+            }
+        }
+        else
+        {
+            //es una pieza negra
+
+            //verificar si la casilla destino esta ocupada
+            if(tablero[dX][dY] > 0){
+                //la casilla esta vacia o tiene una pieza oponente
+                resultado = resultado && true;
+            }
+            else{
+                //la casilla esta ocupada por una pieza propia
+                resultado = false;
+            }
+        }
         return resultado;
     }
 }
