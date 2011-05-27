@@ -95,12 +95,14 @@ public class minimax {
 
         for(int i = 1; i < hijos.length; i++)
         {
+            
+            hijos[i].movimientos = hijos[i].getMovsValid(raiz, freeTurn(hijos[0].turno));
+
             if(step)
             {
                 hijos[i].movimientos[0].esTerminal = true;
             }
 
-            hijos[i].movimientos = hijos[i].getMovsValid(raiz, freeTurn(hijos[0].turno));
             value.ApplyUtility(hijos[i], hijos[i].movimientos);
         }
 
