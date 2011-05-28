@@ -51,7 +51,7 @@ public class heuristica {
         else{
             //piezas negras
             for(int i = 0; i < 8; i++){
-                for(int j = 0; i < 8; j++){
+                for(int j = 0; j < 8; j++){
                     if(pTablero.posicionPiezas[i][j] == -1){
                         //si se encuentra una pieza sumar 100
                         eval = eval + 100;
@@ -73,7 +73,7 @@ public class heuristica {
         if(pTablero.turno == true){
             //piezas blancas
             for(int i = 0; i < 8; i++){
-                for(int j = 0; i < 8; j++){
+                for(int j = 0; j < 8; j++){
                     if(pTablero.posicionPiezas[i][j] == 2){
                         //si se encuentra una pieza sumar 315
                         eval = eval + 315;
@@ -97,7 +97,7 @@ public class heuristica {
         else{
             //piezas negras
             for(int i = 0; i < 8; i++){
-                for(int j = 0; i < 8; j++){
+                for(int j = 0; j < 8; j++){
                     if(pTablero.posicionPiezas[i][j] == -2){
                         //si se encuentra una pieza sumar 315
                         eval = eval + 315;
@@ -126,7 +126,7 @@ public class heuristica {
         if(pTablero.turno == true){
             //piezas blancas
             for(int i = 0; i < 8; i++){
-                for(int j = 0; i < 8; j++){
+                for(int j = 0; j < 8; j++){
                     if(pTablero.posicionPiezas[i][j] == 3){
                         //si se encuentra una pieza sumar 330
                         eval = eval + 330;
@@ -150,7 +150,7 @@ public class heuristica {
         else{
             //piezas negras
             for(int i = 0; i < 8; i++){
-                for(int j = 0; i < 8; j++){
+                for(int j = 0; j < 8; j++){
                     if(pTablero.posicionPiezas[i][j] == -3){
                         //si se encuentra una pieza sumar 330
                         eval = eval + 330;
@@ -563,6 +563,7 @@ public class heuristica {
     }
 
     private boolean validaReina(){
+
         boolean resultado = false;
         resultado = validaAlfil() || validaTorre();
         return resultado;
