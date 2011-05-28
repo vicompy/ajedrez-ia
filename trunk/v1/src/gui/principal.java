@@ -15,7 +15,6 @@ import ajedrez.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 /**
  *
@@ -29,7 +28,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     private boolean release = false;
     private int oX, oY, dX, dY;
     private int tipoO;
-
+    private int turno = c.HUMANO;
     private heuristica heu = new heuristica();
 
     /** Creates new form principal */
@@ -124,6 +123,10 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             tGui[6][i].setTipo(c.wPEON);
         }
 
+        //Coloco el turno al humano
+        this.lbl_turno.setText("BLANCAS - Humano");
+        this.turno = c.HUMANO;
+
 //         for (int x = 0; x < 8; x++) {
 //            for (int y = 0; y < 8; y++) {
 //                System.out.println("X: "+x+", Y: "+y+", VAL: "+tLogico[x][y]);
@@ -136,7 +139,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
 
         if (tipo != c.CASILLA_VACIA) {
             ImageIcon icon = null;
-           // System.out.println("TIPO: " + tipo + ", X:" + x + ", Y:" + y);
+            // System.out.println("TIPO: " + tipo + ", X:" + x + ", Y:" + y);
             icon = new ImageIcon(this.getClass().getResource("/resources/images/" + tipo + ".gif"));
             tGui[x][y].setBackground(null);
             tGui[x][y].setIcon(icon);
@@ -160,6 +163,9 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         }
     }
 
+    private void paintPiezaComida() {
+    }
+
     public void actionPerformed(ActionEvent e) {
         pieza temp = (pieza) e.getSource();
 
@@ -174,14 +180,41 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             dX = temp.getXposT();
             dY = temp.getYposT();
 
+
+            if (/*(tLogico[dX][dY] == c.CASILLA_VACIA)
+                    &&*/ heu.getValidacionPieza(oX, oY, dX, dY, tLogico, tipoO)) { //revisa si el movimiento es valido
+
             if(/*(tLogico[dX][dY]==c.CASILLA_VACIA) &&*/
                     heu.getValidacionPieza(oX, oY, dX, dY, tLogico, tipoO)){ //revisa si el movimiento es valido
+
                 //System.out.println("oX "+oX+", oY "+oY);
                 //System.out.println("dX "+dX+", dY "+dY);
+
+                //si me comi ua pieza la coloco en la parte de comidas
+                //De una cambio de turno
+
+                if (turno == c.HUMANO) {
+                    turno = c.PC;
+                    lbl_turno.setText("NEGRAS - PC");
+                       System.out.println("TIPO: "+tGui[dX][dY].getTipo());
+                       System.out.println("TIPO: "+temp.getTipo());
+                    if (tGui[dX][dY].getTipo() <= -1 && tGui[dX][dY].getTipo() >= -6) {//comio una negra
+                        pieza comida = new pieza();
+                        comida = temp;
+                        comida.setBounds(50, 100, 50, 50);
+                        temp.setBounds(0, 100, 50, 50);
+                        this.pnl_comidas.add(comida);
+                    }
+
+                } else {
+                    turno = c.HUMANO;
+                    lbl_turno.setText("BLANCAS - Humano");
+                }
+
                 tLogico[oX][oY] = c.CASILLA_VACIA;
                 tLogico[dX][dY] = tipoO;
-                paintPieza(oX,oY,c.CASILLA_VACIA);
-                paintPieza(dX,dY,tipoO);
+                paintPieza(oX, oY, c.CASILLA_VACIA);
+                paintPieza(dX, dY, tipoO);
             }
             release = false;
         }
@@ -197,6 +230,13 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     private void initComponents() {
 
         pnl_tablero = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lbl_turno = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txta_bitacora = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        pnl_comidas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ajedrez");
@@ -208,11 +248,79 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         pnl_tablero.setLayout(pnl_tableroLayout);
         pnl_tableroLayout.setHorizontalGroup(
             pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 596, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
         pnl_tableroLayout.setVerticalGroup(
             pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 596, Short.MAX_VALUE)
+            .addGap(0, 423, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Información"));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Turno:");
+
+        lbl_turno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
+        txta_bitacora.setColumns(20);
+        txta_bitacora.setRows(5);
+        jScrollPane1.setViewportView(txta_bitacora);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_turno, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_turno, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Piezas"));
+        jPanel2.setPreferredSize(new java.awt.Dimension(400, 200));
+
+        pnl_comidas.setPreferredSize(new java.awt.Dimension(400, 200));
+
+        javax.swing.GroupLayout pnl_comidasLayout = new javax.swing.GroupLayout(pnl_comidas);
+        pnl_comidas.setLayout(pnl_comidasLayout);
+        pnl_comidasLayout.setHorizontalGroup(
+            pnl_comidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 375, Short.MAX_VALUE)
+        );
+        pnl_comidasLayout.setVerticalGroup(
+            pnl_comidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 196, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnl_comidas, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(pnl_comidas, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -222,19 +330,35 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_tablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(pnl_tablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+                    .addComponent(pnl_tablero, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_turno;
+    private javax.swing.JPanel pnl_comidas;
     private javax.swing.JPanel pnl_tablero;
+    private javax.swing.JTextArea txta_bitacora;
     // End of variables declaration//GEN-END:variables
 }
