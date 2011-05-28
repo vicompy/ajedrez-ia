@@ -18,27 +18,161 @@ public class heuristica {
         
     }
 
-    public int funcEvaluacion(int tablero[][]){
-        int pieza=0;
-        int cBlancas=0;
-        int cNegras= 0;
-        for (int i=1; i<8; i++){
-            for (int j=1; j<8; j++){
-                pieza = tablero[i][j];
-                if(pieza > 0)
-                {
-                    //es una pieza blanca
-                    cBlancas=cBlancas+1;
-                }else{
-                    cNegras=cNegras+1;
+    public void funcionEvaluacion(nodoTablero[] tableros, boolean turno){
+        //para turno true -> blanco; false -> negro
+        for(int i = 0; i < tableros.length; i++){
+            nodoTablero tmp = tableros[i];
+            int evaluacion = 0;
+            evaluacion = evaluacion + evaluarPeones(tmp);
+            evaluacion = evaluacion + evaluarCaballo(tmp);
+            evaluacion = evaluacion + evaluarAlfil(tmp);
+        }
+    }
+
+    private int evaluarPeones(nodoTablero pTablero){
+        int eval = 0;
+        if(pTablero.turno == true){
+            //piezas blancas
+            for(int i = 0; i < 8; i++){
+                for(int j = 0; i < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == 1){
+                        //si se encuentra una pieza sumar 100
+                        eval = eval + 100;
+                        if(j == 3 || j == 4){
+                            //si esta en el centro del tablero sumar 12
+                            eval = eval + 12;
+                        }
+                        //suma dos puntos por cada casilla que haya avanzado
+                        eval = eval + 2 * (6 - i);
+                    }
                 }
             }
         }
-        
-        int Utilidad =(cBlancas-cNegras)/(cBlancas+cNegras);
-        return Utilidad;
+        else{
+            //piezas negras
+            for(int i = 0; i < 8; i++){
+                for(int j = 0; i < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == -1){
+                        //si se encuentra una pieza sumar 100
+                        eval = eval + 100;
+                        if(j == 3 || j == 4){
+                            //si esta en el centro del tablero sumar 12
+                            eval = eval + 12;
+                        }
+                        //suma dos puntos por cada casilla que haya avanzado
+                        eval = eval + 2 * (Math.abs(1 - i));
+                    }
+                }
+            }
+        }
+        return eval;
     }
 
+    private int evaluarCaballo(nodoTablero pTablero){
+        int eval = 0;
+        if(pTablero.turno == true){
+            //piezas blancas
+            for(int i = 0; i < 8; i++){
+                for(int j = 0; i < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == 2){
+                        //si se encuentra una pieza sumar 315
+                        eval = eval + 315;
+                        //sumar entre -15 y 15 dependiendo de que tan cercano este del centro del tablero
+                        if(j == 3 || j == 4){
+                            eval = eval + 15;
+                        }
+                        else if(j == 2 || j == 5){
+                            eval = eval + 5;
+                        }
+                        else if(j == 1 || j == 6){
+                            eval = eval - 5;
+                        }
+                        else{
+                            eval = eval - 15;
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            //piezas negras
+            for(int i = 0; i < 8; i++){
+                for(int j = 0; i < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == -2){
+                        //si se encuentra una pieza sumar 315
+                        eval = eval + 315;
+                        //sumar entre -15 y 15 dependiendo de que tan cercano este del centro del tablero
+                        if(j == 3 || j == 4){
+                            eval = eval + 15;
+                        }
+                        else if(j == 2 || j == 5){
+                            eval = eval + 5;
+                        }
+                        else if(j == 1 || j == 6){
+                            eval = eval - 5;
+                        }
+                        else{
+                            eval = eval - 15;
+                        }
+                    }
+                }
+            }
+        }
+        return eval;
+    }
+
+    private int evaluarAlfil(nodoTablero pTablero){
+        int eval = 0;
+        if(pTablero.turno == true){
+            //piezas blancas
+            for(int i = 0; i < 8; i++){
+                for(int j = 0; i < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == 3){
+                        //si se encuentra una pieza sumar 330
+                        eval = eval + 330;
+                        //sumar entre -15 y 15 dependiendo de que tan cercano este del centro del tablero
+                        if(j == 3 || j == 4){
+                            eval = eval + 15;
+                        }
+                        else if(j == 2 || j == 5){
+                            eval = eval + 5;
+                        }
+                        else if(j == 1 || j == 6){
+                            eval = eval - 5;
+                        }
+                        else{
+                            eval = eval - 15;
+                        }
+                    }
+                }
+            }
+        }
+        else{
+            //piezas negras
+            for(int i = 0; i < 8; i++){
+                for(int j = 0; i < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == -3){
+                        //si se encuentra una pieza sumar 330
+                        eval = eval + 330;
+                        //sumar entre -15 y 15 dependiendo de que tan cercano este del centro del tablero
+                        if(j == 3 || j == 4){
+                            eval = eval + 15;
+                        }
+                        else if(j == 2 || j == 5){
+                            eval = eval + 5;
+                        }
+                        else if(j == 1 || j == 6){
+                            eval = eval - 5;
+                        }
+                        else{
+                            eval = eval - 15;
+                        }
+                    }
+                }
+            }
+        }
+        return eval;
+    }
 
     public boolean getValidacionPieza(int oX, int oY, int dX, int dY, int[][] tablero, int tipoPieza){
         this.oX = oX;
@@ -434,7 +568,7 @@ public class heuristica {
         return resultado;
     }
 
-    public boolean validaRey(){
+    private boolean validaRey(){
         boolean resultado = false;
         int pieza = tablero[oX][oY];
         if(dX == oX + 1 && dY == oY){
