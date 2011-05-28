@@ -33,4 +33,36 @@ public class constantes {
 
     public constantes(){
     }
+
+    public String getPiezaNombre(int tipo){
+
+        switch(tipo){
+            case 1:
+                return "Peón Blanco";
+            case -1:
+                return "Peón Negro";
+            case 2:
+                return "Caballo Blanco";
+            case -2:
+                return "Caballo Negro";
+            case 3:
+                return "Alfil Blanco";
+            case -3:
+                return "Alfil Negro";
+            case 4:
+                return "Torre Blanco";
+            case -4:
+                return "Torre Negro";
+            case 5:
+                return "Reina Blanco";
+            case -5:
+                return "Reina Negro";
+            case 6:
+                return "Rey Blanco";
+            case -6:
+                return "Rey Negro";
+        }
+
+        return "";
+    }
 }
