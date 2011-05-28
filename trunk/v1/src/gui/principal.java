@@ -15,6 +15,7 @@ import ajedrez.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 /**
  *
@@ -28,6 +29,8 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     private boolean release = false;
     private int oX, oY, dX, dY;
     private int tipoO;
+    private int wComidas = 0;
+    private int bComidas = 0;
     private int turno = c.HUMANO;
     private heuristica heu = new heuristica();
 
@@ -163,7 +166,40 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         }
     }
 
-    private void paintPiezaComida() {
+    private void paintPiezaComida(int tipo, int turno) {
+        int x=0;
+        int y=0;
+
+        if(turno==c.HUMANO){
+            y = 100;
+            x = wComidas*50;
+        }else{
+             x = bComidas*50;
+        }
+        if(turno==c.HUMANO && wComidas > 8){
+            wComidas = 0;
+            y = 150;
+        }
+
+        if(turno==c.PC && bComidas > 8){
+            bComidas = 0;
+            y = 50;
+        }
+
+        ImageIcon icon = null;
+        icon = new ImageIcon(this.getClass().getResource("/resources/images/" + tipo + ".gif"));
+        JButton comida = new JButton();
+        comida.setIcon(icon);
+        comida.setBounds(x, y, 50, 50);
+       // System.out.println("X: "+x+", Y: "+y);
+        pnl_comidas.add(comida);
+        pnl_comidas.repaint();
+        
+        if(turno==c.HUMANO){
+            wComidas++;
+        }else{
+            bComidas++;
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -173,40 +209,37 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             oX = temp.getXposT();
             oY = temp.getYposT();
             tipoO = temp.getTipo();
-            release = true;
+
+            if(turno==c.PC && (tipoO<=-1 && tipoO>=-6)){
+                release = true;
+            }
+
+            if(turno==c.HUMANO && (tipoO>=1 && tipoO<=6)){
+                release = true;
+            }
             //System.out.println("PIEZA: "+temp.getTipo());
             //System.out.println("oX: "+temp.getXposT()+", oY: "+temp.getYposT());
         } else {
             dX = temp.getXposT();
             dY = temp.getYposT();
 
-
-            if (/*(tLogico[dX][dY] == c.CASILLA_VACIA)
-                    &&*/ heu.getValidacionPieza(oX, oY, dX, dY, tLogico, tipoO)) { //revisa si el movimiento es valido
-
-            if(/*(tLogico[dX][dY]==c.CASILLA_VACIA) &&*/
-                    heu.getValidacionPieza(oX, oY, dX, dY, tLogico, tipoO)){ //revisa si el movimiento es valido
-
-                //System.out.println("oX "+oX+", oY "+oY);
-                //System.out.println("dX "+dX+", dY "+dY);
-
+            if (heu.getValidacionPieza(oX, oY, dX, dY, tLogico, tipoO)) { //revisa si el movimiento es valido
                 //si me comi ua pieza la coloco en la parte de comidas
                 //De una cambio de turno
-
                 if (turno == c.HUMANO) {
+                    
+//                    System.out.println("TIPO: " + tGui[dX][dY].getTipo());
+//                    System.out.println("TIPO: " + temp.getTipo());
+                    if (tGui[dX][dY].getTipo() <= -1 && tGui[dX][dY].getTipo() >= -6) {//comio una negra
+                        paintPiezaComida(temp.getTipo(),turno);
+                    }
                     turno = c.PC;
                     lbl_turno.setText("NEGRAS - PC");
-                       System.out.println("TIPO: "+tGui[dX][dY].getTipo());
-                       System.out.println("TIPO: "+temp.getTipo());
-                    if (tGui[dX][dY].getTipo() <= -1 && tGui[dX][dY].getTipo() >= -6) {//comio una negra
-                        pieza comida = new pieza();
-                        comida = temp;
-                        comida.setBounds(50, 100, 50, 50);
-                        temp.setBounds(0, 100, 50, 50);
-                        this.pnl_comidas.add(comida);
-                    }
 
                 } else {
+                    if (tGui[dX][dY].getTipo() >=1 && tGui[dX][dY].getTipo() <= 6) {//comio una negra
+                        paintPiezaComida(temp.getTipo(),turno);
+                    }
                     turno = c.HUMANO;
                     lbl_turno.setText("BLANCAS - Humano");
                 }
@@ -252,12 +285,12 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         );
         pnl_tableroLayout.setVerticalGroup(
             pnl_tableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 434, Short.MAX_VALUE)
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Información"));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14));
         jLabel1.setText("Turno:");
 
         lbl_turno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -283,9 +316,10 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_turno, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_turno, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -345,7 +379,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
-                    .addComponent(pnl_tablero, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE))
+                    .addComponent(pnl_tablero, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
