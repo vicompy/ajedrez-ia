@@ -129,6 +129,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         //Coloco el turno al humano
         this.lbl_turno.setText("BLANCAS - Humano");
         this.turno = c.HUMANO;
+        setLog("Turno: BLANCAS - Humano");
 
 //         for (int x = 0; x < 8; x++) {
 //            for (int y = 0; y < 8; y++) {
@@ -167,22 +168,25 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     }
 
     private void paintPiezaComida(int tipo, int turno) {
-        int x=0;
-        int y=0;
+        int x = 0;
+        int y = 0;
 
-        if(turno==c.HUMANO){
+        if (turno == c.HUMANO) {
             y = 100;
-            x = wComidas*50;
-        }else{
-             x = bComidas*50;
+            x = wComidas * 50;
+        } else {
+            x = bComidas * 50;
         }
-        if(turno==c.HUMANO && wComidas > 8){
+
+        if (turno == c.HUMANO && wComidas == 7) {
             wComidas = 0;
+            x = 0;
             y = 150;
         }
 
-        if(turno==c.PC && bComidas > 8){
+        if (turno == c.PC && bComidas == 7) {
             bComidas = 0;
+            x = 0;
             y = 50;
         }
 
@@ -191,14 +195,24 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         JButton comida = new JButton();
         comida.setIcon(icon);
         comida.setBounds(x, y, 50, 50);
-       // System.out.println("X: "+x+", Y: "+y);
+        System.out.println("X: " + x + ", Y: " + y);
         pnl_comidas.add(comida);
         pnl_comidas.repaint();
-        
-        if(turno==c.HUMANO){
+
+        if (turno == c.HUMANO) {
             wComidas++;
-        }else{
+        } else {
             bComidas++;
+        }
+
+        setLog("Pieza comida: " + c.getPiezaNombre(tipo));
+        System.out.println("w: " + wComidas + ", b: " + bComidas);
+    }
+
+    public void setLog(String mensaje) {
+        try {
+            this.txta_bitacora.append(mensaje + System.getProperty("line.separator"));
+        } catch (Exception e) {
         }
     }
 
@@ -210,15 +224,13 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             oY = temp.getYposT();
             tipoO = temp.getTipo();
 
-            if(turno==c.PC && (tipoO<=-1 && tipoO>=-6)){
+            if (turno == c.PC && (tipoO <= -1 && tipoO >= -6)) {
                 release = true;
             }
 
-            if(turno==c.HUMANO && (tipoO>=1 && tipoO<=6)){
+            if (turno == c.HUMANO && (tipoO >= 1 && tipoO <= 6)) {
                 release = true;
             }
-            //System.out.println("PIEZA: "+temp.getTipo());
-            //System.out.println("oX: "+temp.getXposT()+", oY: "+temp.getYposT());
         } else {
             dX = temp.getXposT();
             dY = temp.getYposT();
@@ -227,27 +239,34 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                 //si me comi ua pieza la coloco en la parte de comidas
                 //De una cambio de turno
                 if (turno == c.HUMANO) {
-                    
-//                    System.out.println("TIPO: " + tGui[dX][dY].getTipo());
-//                    System.out.println("TIPO: " + temp.getTipo());
                     if (tGui[dX][dY].getTipo() <= -1 && tGui[dX][dY].getTipo() >= -6) {//comio una negra
-                        paintPiezaComida(temp.getTipo(),turno);
+                        paintPiezaComida(temp.getTipo(), turno);
                     }
                     turno = c.PC;
                     lbl_turno.setText("NEGRAS - PC");
 
                 } else {
-                    if (tGui[dX][dY].getTipo() >=1 && tGui[dX][dY].getTipo() <= 6) {//comio una negra
-                        paintPiezaComida(temp.getTipo(),turno);
+                    if (tGui[dX][dY].getTipo() >= 1 && tGui[dX][dY].getTipo() <= 6) {//comio una negra
+                        paintPiezaComida(temp.getTipo(), turno);
                     }
                     turno = c.HUMANO;
                     lbl_turno.setText("BLANCAS - Humano");
                 }
 
+
                 tLogico[oX][oY] = c.CASILLA_VACIA;
                 tLogico[dX][dY] = tipoO;
                 paintPieza(oX, oY, c.CASILLA_VACIA);
                 paintPieza(dX, dY, tipoO);
+
+                setLog(c.getPiezaNombre(tipoO) + " se mueve de X:" + oX + ", Y:" + oY
+                        + " a X:" + dX + ", Y:" + dY);
+
+                if (turno == c.HUMANO) {
+                    setLog("Turno: BLANCAS - Humano");
+                } else {
+                    setLog("Turno: NEGRAS - PC");
+                }
             }
             release = false;
         }
