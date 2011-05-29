@@ -642,7 +642,7 @@ public class heuristica {
      *  @param hijos son los hijos que le pertenecen al nodo raiz en
      *               particular
      */
-    public void ApplyUtility(nodoTablero raiz, nodoTablero hijos[])
+    public void ApplyUtility(nodoTablero hijos[])
     {
         //La utilidad sera calculada para todos los hijos
         //luego subira segun sea el critero (MAX o MIN) la utilidad

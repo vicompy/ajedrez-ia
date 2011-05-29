@@ -17,12 +17,14 @@ public class minimax {
     private boolean turn;
     private boolean step;
     private heuristica value;
+    private int Tutility;
 
     public minimax(boolean turn, nodoTablero raiz, int dificultad)
     {
         to_down = size = 0;
         this.turn = turn;
         step = true;
+        Tutility = 0;
         value = new heuristica();
         BuildTree(raiz, dificultad);
     }
@@ -38,8 +40,8 @@ public class minimax {
     public void BuildTree(nodoTablero raiz, int dificultad)
     {
         to_down = dificultad*3 - 2;
-        size = dificultad*3;
         raiz.movimientos = raiz.getMovsValid(raiz, turn);
+        size = raiz.movimientos.length;
         raiz.turno = freeTurn(turn);
 
         for(int i = 0; i < size; i++)
@@ -88,30 +90,148 @@ public class minimax {
         }
 
         if(step){
+
+            ///en esta parte encuentra los nodos terminales
+            ///para luego realizar valorMin, valorMax segun convenga
+
             hijos[0].movimientos = hijos[0].getMovsValid(raiz, freeTurn(hijos[0].turno));
             hijos[0].movimientos[0].esTerminal = true;
-            value.ApplyUtility(hijos[0], hijos[0].movimientos);
-        }
-        else
-        {
-            value.ApplyUtility(hijos[0], hijos[0].movimientos);
+
+            //aplicamos la utilidad con la condicion que sean nodos terminales
+            value.ApplyUtility(hijos[0].movimientos);
+
+            //aplicamos lo de valor de utilidad al sub-arbol mas a la izquierda
+            ApplyCriteriaLeft(hijos[0], hijos[0].movimientos);
         }
 
         for(int i = 1; i < hijos.length; i++)
         {
-            
+
+            //se crean los nodos con los movimientos validos
+            //segun la condicion del nodo raiz
             hijos[i].movimientos = hijos[i].getMovsValid(raiz, freeTurn(hijos[0].turno));
 
             if(step)
             {
+                //se le configura a estos hijos como nodos termianles
                 hijos[i].movimientos[0].esTerminal = true;
-            }
 
-            value.ApplyUtility(hijos[i], hijos[i].movimientos);
+                //aplicamos la utilidad con la condicion que sean nodos terminales
+                value.ApplyUtility(hijos[i].movimientos);
+            }
+        }
+
+        if(step)
+        {
+            //se aplica el recorrido para terminar el arbol en funcion
+            //de ir poniendo la utilidad que corresponde a los demas nodos
+            for(int i = 0; i < hijos.length; i++)
+            {
+                
+            }
+        }
+        else{
+
         }
 
         step = false;
 
+    }
+
+    public void ApplyCriteriaLeft(nodoTablero raiz, nodoTablero hijos[])
+    {
+        int utility = 0;
+
+        //esto quiere decir que
+        //el padre son Negras
+        //tomaremos a las Negras como MIN
+        if(!raiz.turno)
+        {
+            int temp_utility = 100000;
+
+            for(int i = 0; i < hijos.length; i++)
+            {
+                if(hijos[i].funcionUtilidad < temp_utility)
+                {
+                    temp_utility = hijos[i].funcionUtilidad;
+                }
+            }
+
+            utility = temp_utility;
+        }
+        //Esto quiere decir que el padre son Blancas
+        //Tomaremos las Blancas como MAX
+        else
+        {
+            int temp_utility = -100000;
+
+            for(int i = 0; i < hijos.length; i++)
+            {
+                if(hijos[i].funcionUtilidad > temp_utility)
+                {
+                    temp_utility = hijos[i].funcionUtilidad;
+                }
+            }
+
+            utility = temp_utility;
+        }
+
+        raiz.funcionUtilidad = new Integer(utility);
+        Tutility = new Integer(utility);
+    }
+
+    public void ApplyCriteriaLeftRight(nodoTablero raiz, nodoTablero hijos[])
+    {
+        int utility = 0;
+
+        //esto quiere decir que
+        //el padre son Negras
+        //tomaremos a las Negras como MIN
+        if(!raiz.esTerminal)
+        {
+            int temp_utility = 100000;
+
+            for(int i = 0; i < hijos.length; i++)
+            {
+                //si esto es asi es que el nodo padre
+                //del nodo raiz es MAX
+                if(!raiz.esTerminal)
+                {
+                    if(temp_utility < hijos[i].funcionUtilidad)
+                    {
+                        temp_utility = hijos[i].funcionUtilidad;
+
+                        if(Tutility > temp_utility)
+                        {
+                            //aqui vamos a hacer la poda
+                            //segun el criterio de la utilidad
+                            //del padre de la raiz
+                            nodoTablero final_hijos[] = new nodoTablero[i];
+
+                            for(int j = 0; j < i; j++)
+                            {
+                                final_hijos[j] = hijos[j];
+                            }
+
+                            raiz.movimientos = final_hijos;
+                            
+                            i = hijos.length;
+                        }
+                    }
+                }
+                //si pasa por aqui quiere decir que el
+                //nodo padre del nodo raiz es MIN
+                else
+                {
+                    
+                }
+
+                if(hijos[i].funcionUtilidad < temp_utility)
+                {
+                    temp_utility = hijos[i].funcionUtilidad;
+                }
+            }
+        }
     }
 
 }
