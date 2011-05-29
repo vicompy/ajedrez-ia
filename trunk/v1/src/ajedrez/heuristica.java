@@ -123,10 +123,16 @@ public class heuristica {
 
     private int evaluarAlfil(nodoTablero pTablero){
         int eval = 0;
+        int i;
+        int j;
+        int a,b,m;
+        int mov1,mov2,mov3,mov4=0;
+        char[][] tabla = new char[9][9];
+
         if(pTablero.turno == true){
             //piezas blancas
-            for(int i = 0; i < 8; i++){
-                for(int j = 0; j < 8; j++){
+            for(i = 0; i < 8; i++){
+                for(j = 0; j < 8; j++){
                     if(pTablero.posicionPiezas[i][j] == 3){
                         //si se encuentra una pieza sumar 330
                         eval = eval + 330;
@@ -143,14 +149,57 @@ public class heuristica {
                         else{
                             eval = eval - 15;
                         }
-                    }
-                }
-            }
-        }
+
+                        //la hubicación se encuentra en un alfil
+
+                        a=i;
+                        b=j;
+
+                        mov1=mov2=mov3=mov4=0;
+                        for(i = 0; i < 8; i++){
+                            m=a-i;
+                            for(j = 0; j < 8; j++){
+                                if(a==i && b==j){
+                                    tabla[i][j]='A';//alfil
+                                }
+                                else{
+                                    tabla[i][j]=' ';
+                                }
+
+                                if(j+m==b || j-m==b){
+                                    if(j+m==b){
+                                        mov1=mov1+1;
+                                        mov3=mov3+1;
+                                    }
+                                    if(j-m==b){
+                                        mov2=mov2+1;
+                                        mov4=mov4+1;
+                                    }
+                                    if(tabla[i][j]=='A'){
+                                        mov3=0;
+                                        mov4=0;
+                                    }
+                                }
+                            }//for j
+                        }//for i
+                        mov1 = Math.abs(mov1-mov3)-1;
+                        mov2 = Math.abs(mov2-mov4)-1;
+                        if (mov1>mov2 && mov1>mov3 && mov1>mov4)
+                            eval = eval+2*mov1;
+                        else if (mov2>mov1 && mov2>mov3 && mov2>mov4)
+                            eval = eval+2*mov2;
+                        else if (mov3>mov1 && mov3>mov2 && mov3>mov4)
+                            eval = eval+2*mov3;
+                        else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
+                            eval = eval+2*mov4;
+                    }//if alfil blanco
+                }//for j
+            }//for i
+        }//if turno blancas
         else{
             //piezas negras
-            for(int i = 0; i < 8; i++){
-                for(int j = 0; j < 8; j++){
+            for(i = 0; i < 8; i++){
+                for(j = 0; j < 8; j++){
                     if(pTablero.posicionPiezas[i][j] == -3){
                         //si se encuentra una pieza sumar 330
                         eval = eval + 330;
@@ -167,10 +216,51 @@ public class heuristica {
                         else{
                             eval = eval - 15;
                         }
-                    }
-                }
-            }
-        }
+                        //la hubicación se encuentra en un alfil
+
+                        a=i;
+                        b=j;
+                        mov1=mov2=mov3=mov4=0;
+                        for(i = 0; i < 8; i++){
+                            m=a-i;
+                            for(j = 0; j < 8; j++){
+                                if(a==i && b==j){
+                                    tabla[i][j]='A';//alfil
+                                }
+                                else{
+                                    tabla[i][j]=' ';
+                                }
+
+                                if(j+m==b || j-m==b){
+                                    if(j+m==b){
+                                        mov1=mov1+1;
+                                        mov3=mov3+1;
+                                    }
+                                    if(j-m==b){
+                                        mov2=mov2+1;
+                                        mov4=mov4+1;
+                                    }
+                                    if(tabla[i][j]=='A'){
+                                        mov3=0;
+                                        mov4=0;
+                                    }
+                                }
+                            }//for j
+                        }//for i
+                        mov1 = Math.abs(mov1-mov3)-1;
+                        mov2 = Math.abs(mov2-mov4)-1;
+                        if (mov1>mov2 && mov1>mov3 && mov1>mov4)
+                            eval = eval+2*mov1;
+                        else if (mov2>mov1 && mov2>mov3 && mov2>mov4)
+                            eval = eval+2*mov2;
+                        else if (mov3>mov1 && mov3>mov2 && mov3>mov4)
+                            eval = eval+2*mov3;
+                        else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
+                            eval = eval+2*mov4;
+                    }//si alfil negro
+                }//for j
+            }//for i
+        }//turno negra
         return eval;
     }
 
