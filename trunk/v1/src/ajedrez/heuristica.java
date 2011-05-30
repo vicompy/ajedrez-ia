@@ -26,6 +26,8 @@ public class heuristica {
             evaluacion = evaluacion + evaluarPeones(tmp);
             evaluacion = evaluacion + evaluarCaballo(tmp);
             evaluacion = evaluacion + evaluarAlfil(tmp);
+            evaluacion = evaluacion + evaluarTorre(tmp);
+            evaluacion = evaluacion + evaluarReina(tmp);
         }
     }
 
@@ -263,6 +265,270 @@ public class heuristica {
         }//turno negra
         return eval;
     }
+    
+    private int evaluarTorre(nodoTablero pTablero){
+        int eval = 0;
+        int i;
+        int j;
+        int a,b,m;
+        int mov1,mov2,mov3,mov4=0;
+        char[][] tabla = new char[9][9];
+
+        if(pTablero.turno == true){
+            //piezas blancas
+            for(i = 0; i < 8; i++){
+                for(j = 0; j < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == 4){
+                        //si se encuentra una pieza sumar 500
+                        eval = eval + 500;
+
+                        //la hubicación se encuentra en una torre
+
+                        a=i;
+                        b=j;
+
+                        mov1=mov2=mov3=mov4=0;
+                        for(i = 0; i < 8; i++){
+                            m=a-i;
+                            for(j = 0; j < 8; j++){
+                                if(a==i && b==j){
+                                    tabla[i][j]='A';//Reina
+                                }
+                                else{
+                                    tabla[i][j]=' ';
+                                }
+
+                                if(j+m==b || j-m==b){
+                                    if(j+m==b){
+                                        mov1=mov1+1;
+                                        mov3=mov3+1;
+                                    }
+                                    if(j-m==b){
+                                        mov2=mov2+1;
+                                        mov4=mov4+1;
+                                    }
+                                    if(tabla[i][j]=='A'){
+                                        mov3=0;
+                                        mov4=0;
+                                    }
+                                }
+                            }//for j
+                        }//for i
+                        mov1 = Math.abs(mov1-mov3)-1;
+                        mov2 = Math.abs(mov2-mov4)-1;
+                        if (mov1>mov2 && mov1>mov3 && mov1>mov4)
+                            eval = eval+2*mov1;
+                        else if (mov2>mov1 && mov2>mov3 && mov2>mov4)
+                            eval = eval+2*mov2;
+                        else if (mov3>mov1 && mov3>mov2 && mov3>mov4)
+                            eval = eval+2*mov3;
+                        else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
+                            eval = eval+2*mov4;
+                    }//if alfil blanco
+                }//for j
+            }//for i
+        }//if turno blancas
+        else{
+            //piezas negras
+            for(i = 0; i < 8; i++){
+                for(j = 0; j < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == -4){
+                        //si se encuentra una pieza sumar 500
+                        eval = eval + 500;
+                        //la hubicación se encuentra en una torre
+
+                        a=i;
+                        b=j;
+                        mov1=mov2=mov3=mov4=0;
+                        for(i = 0; i < 8; i++){
+                            m=a-i;
+                            for(j = 0; j < 8; j++){
+                                if(a==i && b==j){
+                                    tabla[i][j]='A';//alfil
+                                }
+                                else{
+                                    tabla[i][j]=' ';
+                                }
+
+                                if(j+m==b || j-m==b){
+                                    if(j+m==b){
+                                        mov1=mov1+1;
+                                        mov3=mov3+1;
+                                    }
+                                    if(j-m==b){
+                                        mov2=mov2+1;
+                                        mov4=mov4+1;
+                                    }
+                                    if(tabla[i][j]=='A'){
+                                        mov3=0;
+                                        mov4=0;
+                                    }
+                                }
+                            }//for j
+                        }//for i
+                        mov1 = Math.abs(mov1-mov3)-1;
+                        mov2 = Math.abs(mov2-mov4)-1;
+                        if (mov1>mov2 && mov1>mov3 && mov1>mov4)
+                            eval = eval+2*mov1;
+                        else if (mov2>mov1 && mov2>mov3 && mov2>mov4)
+                            eval = eval+2*mov2;
+                        else if (mov3>mov1 && mov3>mov2 && mov3>mov4)
+                            eval = eval+2*mov3;
+                        else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
+                            eval = eval+2*mov4;
+                    }//si alfil negro
+                }//for j
+            }//for i
+        }//turno negra
+
+        return eval;
+    } //evaluarTorre
+
+
+
+    private int evaluarReina(nodoTablero pTablero){
+        int eval = 0;
+        int i;
+        int j;
+        int a,b,m;
+        int mov1,mov2,mov3,mov4=0;
+        char[][] tabla = new char[9][9];
+
+        if(pTablero.turno == true){
+            //piezas blancas
+            for(i = 0; i < 8; i++){
+                for(j = 0; j < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == 5){
+                        //si se encuentra una pieza sumar 940
+                        eval = eval + 940;
+                        //sumar entre -10 y 10 dependiendo de que tan cercano este del centro del tablero
+                        if(j == 3 || j == 4){
+                            eval = eval + 10;
+                        }
+                        else if(j == 2 || j == 5){
+                            eval = eval + 5;
+                        }
+                        else if(j == 1 || j == 6){
+                            eval = eval - 5;
+                        }
+                        else{
+                            eval = eval - 10;
+                        }
+
+                        //la hubicación se encuentra en una reina
+
+                        a=i;
+                        b=j;
+
+                        mov1=mov2=mov3=mov4=0;
+                        for(i = 0; i < 8; i++){
+                            m=a-i;
+                            for(j = 0; j < 8; j++){
+                                if(a==i && b==j){
+                                    tabla[i][j]='A';//Reina
+                                }
+                                else{
+                                    tabla[i][j]=' ';
+                                }
+
+                                if(j+m==b || j-m==b){
+                                    if(j+m==b){
+                                        mov1=mov1+1;
+                                        mov3=mov3+1;
+                                    }
+                                    if(j-m==b){
+                                        mov2=mov2+1;
+                                        mov4=mov4+1;
+                                    }
+                                    if(tabla[i][j]=='A'){
+                                        mov3=0;
+                                        mov4=0;
+                                    }
+                                }
+                            }//for j
+                        }//for i
+                        mov1 = Math.abs(mov1-mov3)-1;
+                        mov2 = Math.abs(mov2-mov4)-1;
+                        if (mov1>mov2 && mov1>mov3 && mov1>mov4)
+                            eval = eval+2*mov1;
+                        else if (mov2>mov1 && mov2>mov3 && mov2>mov4)
+                            eval = eval+2*mov2;
+                        else if (mov3>mov1 && mov3>mov2 && mov3>mov4)
+                            eval = eval+2*mov3;
+                        else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
+                            eval = eval+2*mov4;
+                    }//if alfil blanco
+                }//for j
+            }//for i
+        }//if turno blancas
+        else{
+            //piezas negras
+            for(i = 0; i < 8; i++){
+                for(j = 0; j < 8; j++){
+                    if(pTablero.posicionPiezas[i][j] == -5){
+                        //si se encuentra una pieza sumar 940
+                        eval = eval + 940;
+                        //sumar entre -10 y 10 dependiendo de que tan cercano este del centro del tablero
+                        if(j == 3 || j == 4){
+                            eval = eval + 10;
+                        }
+                        else if(j == 2 || j == 5){
+                            eval = eval + 5;
+                        }
+                        else if(j == 1 || j == 6){
+                            eval = eval - 5;
+                        }
+                        else{
+                            eval = eval - 10;
+                        }
+                        //la hubicación se encuentra una reina
+
+                        a=i;
+                        b=j;
+                        mov1=mov2=mov3=mov4=0;
+                        for(i = 0; i < 8; i++){
+                            m=a-i;
+                            for(j = 0; j < 8; j++){
+                                if(a==i && b==j){
+                                    tabla[i][j]='A';//reina
+                                }
+                                else{
+                                    tabla[i][j]=' ';
+                                }
+
+                                if(j+m==b || j-m==b){
+                                    if(j+m==b){
+                                        mov1=mov1+1;
+                                        mov3=mov3+1;
+                                    }
+                                    if(j-m==b){
+                                        mov2=mov2+1;
+                                        mov4=mov4+1;
+                                    }
+                                    if(tabla[i][j]=='A'){
+                                        mov3=0;
+                                        mov4=0;
+                                    }
+                                }
+                            }//for j
+                        }//for i
+                        mov1 = Math.abs(mov1-mov3)-1;
+                        mov2 = Math.abs(mov2-mov4)-1;
+                        if (mov1>mov2 && mov1>mov3 && mov1>mov4)
+                            eval = eval+2*mov1;
+                        else if (mov2>mov1 && mov2>mov3 && mov2>mov4)
+                            eval = eval+2*mov2;
+                        else if (mov3>mov1 && mov3>mov2 && mov3>mov4)
+                            eval = eval+2*mov3;
+                        else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
+                            eval = eval+2*mov4;
+                    }//si alfil negro
+                }//for j
+            }//for i
+        }//turno negra
+
+        return eval;
+    } //evaluarReina
 
     public boolean getValidacionPieza(int oX, int oY, int dX, int dY, int[][] tablero, int tipoPieza){
         this.oX = oX;
