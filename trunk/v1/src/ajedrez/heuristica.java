@@ -292,7 +292,7 @@ public class heuristica {
                             m=a-i;
                             for(j = 0; j < 8; j++){
                                 if(a==i && b==j){
-                                    tabla[i][j]='A';//Reina
+                                    tabla[i][j]='A';//Torre
                                 }
                                 else{
                                     tabla[i][j]=' ';
@@ -324,7 +324,7 @@ public class heuristica {
                             eval = eval+2*mov3;
                         else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
                             eval = eval+2*mov4;
-                    }//if alfil blanco
+                    }//if torre blanca
                 }//for j
             }//for i
         }//if turno blancas
@@ -344,7 +344,7 @@ public class heuristica {
                             m=a-i;
                             for(j = 0; j < 8; j++){
                                 if(a==i && b==j){
-                                    tabla[i][j]='A';//alfil
+                                    tabla[i][j]='A';//torre
                                 }
                                 else{
                                     tabla[i][j]=' ';
@@ -376,7 +376,7 @@ public class heuristica {
                             eval = eval+2*mov3;
                         else if (mov4>mov1 && mov4>mov2 && mov4>mov3)
                             eval = eval+2*mov4;
-                    }//si alfil negro
+                    }//si torre negra
                 }//for j
             }//for i
         }//turno negra
