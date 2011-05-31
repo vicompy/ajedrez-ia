@@ -267,6 +267,10 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                 } else {
                     setLog("Turno: NEGRAS - PC");
                 }
+
+                //Por ser probado, antes en Minimax
+                //y luego aqui
+                //heu.generateChilds(tLogico, tipoO);
             }
             release = false;
         }
