@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -271,6 +272,16 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                 //Por ser probado, antes en Minimax
                 //y luego aqui
                 //heu.generateChilds(tLogico, tipoO);
+
+                //comprueba si se esta en jaque
+                int jaque = heu.isJaque(tipoO,turno);
+                if(jaque==c.HUMANO){
+                    JOptionPane.showMessageDialog(null, "Jaque a Blancas");
+                    setLog("Jaque a Blancas");
+                }else if(jaque==c.PC){
+                    JOptionPane.showMessageDialog(null, "Jaque a Negras");
+                    setLog("Jaque a Negras");
+                }
             }
             release = false;
         }
