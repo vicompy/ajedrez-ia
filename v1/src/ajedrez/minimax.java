@@ -17,8 +17,9 @@ public class minimax {
     private int alfa;
     private int beta;
 
-    public nodoTablero minimaxEval(){
+    public nodoTablero minimaxEval(int prof){
 	nodoTablero mov = null;
+        profundidad = prof;
         alfa = Integer.MIN_VALUE;
         beta = Integer.MAX_VALUE;
         int max;

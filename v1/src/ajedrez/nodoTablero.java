@@ -17,7 +17,7 @@ public class nodoTablero {
     public nodoTablero padre;
     public nodoTablero[] movimientos;
     public LinkedList<nodoTablero> hijos;
-    public int funcionUtilidad;
+    private int funcionUtilidad;
     public boolean turno;
     public minimax mm;
     public heuristica heu;
@@ -43,6 +43,7 @@ public class nodoTablero {
         funcionUtilidad = func;
     }
     public int getFuncionUtilidad(){
+        heu.funcionEvaluacion(this, turno);
         return funcionUtilidad;
     }
 
@@ -719,7 +720,7 @@ public class nodoTablero {
     }
 
     public int getEvaluacion() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return getFuncionUtilidad();
     }
 
 }
