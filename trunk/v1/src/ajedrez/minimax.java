@@ -14,15 +14,19 @@ public class minimax {
 
     public nodoTablero raiz;
     private int profundidad;
+    private int alfa;
+    private int beta;
 
     public nodoTablero minimaxEval(){
 	nodoTablero mov = null;
+        alfa = Integer.MIN_VALUE;
+        beta = Integer.MAX_VALUE;
         int max;
 	int cmax;
 	max = Integer.MIN_VALUE;
         raiz.generarHijos();
 	for(int i = 0; raiz.hijos != null && i < raiz.hijos.size(); i++){
-		cmax = valorMax(raiz.hijos.get(i), profundidad);
+		cmax = valorMax(raiz.hijos.get(i), profundidad, alfa, beta);
 		if(cmax > max){
 			max = cmax;
 			mov = raiz.hijos.get(i);
@@ -31,36 +35,34 @@ public class minimax {
 	return mov;
     }
 
-    private int valorMax(nodoTablero nodo, int prof){
-	int vmax;
-        nodo.generarHijos();
+    private int valorMax(nodoTablero nodo, int prof, int al, int be){
+	nodo.generarHijos();
 	if(nodo.hijos == null || prof == 0){
 		return nodo.getEvaluacion();
 	}
 	else{
-		vmax = Integer.MIN_VALUE;
 		for(int i = 0; i < nodo.hijos.size(); i++){
-			vmax = Math.max(vmax, valorMin(nodo.hijos.get(i), prof - 1));
+                    al = Math.max(al, valorMin(nodo.hijos.get(i), prof - 1, al, be));
+                    if(al >= be)
+                        return be;
 		}
-                return vmax;
+                return al;
 	}
     }
 
-    private int valorMin(nodoTablero nodo, int prof){
-	int vmin;
-        nodo.generarHijos();
+    private int valorMin(nodoTablero nodo, int prof, int al, int be){
+	nodo.generarHijos();
 	if(nodo.hijos == null || prof == 0){
 		return nodo.getEvaluacion();
 	}
 	else{
-		vmin = Integer.MAX_VALUE;
 		for(int i = 0; i < nodo.hijos.size(); i++){
-			vmin = Math.min(vmin, valorMax(nodo.hijos.get(i), prof - 1));
+                    be = Math.min(be, valorMax(nodo.hijos.get(i), prof - 1, al, be));
+                    if(al >= be)
+                        return al;
 		}
-                return vmin;
+                return be;
 	}
 
     }
-
-
 }
