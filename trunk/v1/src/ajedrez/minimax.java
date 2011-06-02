@@ -23,7 +23,7 @@ public class minimax {
 
     //public nodoTablero minimaxEval(int prof){
     public int[][] minimaxEval(int prof,int[][] tablero){
-	nodoTablero mov = null;
+	nodoTablero mov = raiz;
         profundidad = prof;
         alfa = Integer.MIN_VALUE;
         beta = Integer.MAX_VALUE;
@@ -39,8 +39,7 @@ public class minimax {
 			mov = raiz.hijos.get(i);
 		}
 	}
-	//return mov;
-        return mov.posicionPiezas;
+	return mov.posicionPiezas;
     }
 
     private int valorMax(nodoTablero nodo, int prof, int al, int be){

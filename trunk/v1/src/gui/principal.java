@@ -219,7 +219,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     }
 
     private void tiraPC(){
-        tLogico = minmax.minimaxEval(1,tLogico);
+        tLogico = minmax.minimaxEval(3,tLogico);
         repaintPiezas(tLogico);
     }
 
