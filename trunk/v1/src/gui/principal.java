@@ -34,6 +34,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     private int bComidas = 0;
     private int turno = c.HUMANO;
     private heuristica heu = new heuristica();
+    private minimax minmax = new minimax();
 
     /** Creates new form principal */
     public principal() {
@@ -217,6 +218,11 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         }
     }
 
+    private void tiraPC(){
+        tLogico = minmax.minimaxEval(1,tLogico);
+        repaintPiezas(tLogico);
+    }
+
     public void actionPerformed(ActionEvent e) {
         pieza temp = (pieza) e.getSource();
 
@@ -267,6 +273,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                     setLog("Turno: BLANCAS - Humano");
                 } else {
                     setLog("Turno: NEGRAS - PC");
+                    tiraPC();
                 }
 
                 //Por ser probado, antes en Minimax

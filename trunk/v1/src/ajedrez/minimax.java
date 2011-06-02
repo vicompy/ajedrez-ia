@@ -12,12 +12,17 @@ package ajedrez;
  */
 public class minimax {
 
-    public nodoTablero raiz;
+    public nodoTablero raiz = new nodoTablero();
     private int profundidad;
     private int alfa;
     private int beta;
 
-    public nodoTablero minimaxEval(int prof){
+    public minimax(){
+        
+    }
+
+    //public nodoTablero minimaxEval(int prof){
+    public int[][] minimaxEval(int prof,int[][] tablero){
 	nodoTablero mov = null;
         profundidad = prof;
         alfa = Integer.MIN_VALUE;
@@ -25,6 +30,7 @@ public class minimax {
         int max;
 	int cmax;
 	max = Integer.MIN_VALUE;
+        raiz.setPosicionPiezas(tablero);
         raiz.generarHijos();
 	for(int i = 0; raiz.hijos != null && i < raiz.hijos.size(); i++){
 		cmax = valorMax(raiz.hijos.get(i), profundidad, alfa, beta);
@@ -33,7 +39,8 @@ public class minimax {
 			mov = raiz.hijos.get(i);
 		}
 	}
-	return mov;
+	//return mov;
+        return mov.posicionPiezas;
     }
 
     private int valorMax(nodoTablero nodo, int prof, int al, int be){
