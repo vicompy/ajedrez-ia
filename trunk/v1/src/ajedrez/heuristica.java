@@ -62,17 +62,15 @@ public class heuristica {
 
     }
 
-    public void funcionEvaluacion(nodoTablero[] tableros, boolean turno) {
+    public void funcionEvaluacion(nodoTablero tablero, boolean turno) {
         //para turno true -> blanco; false -> negro
-        for (int i = 0; i < tableros.length; i++) {
-            nodoTablero tmp = tableros[i];
-            int evaluacion = 0;
-            evaluacion = evaluacion + evaluarPeones(tmp);
-            evaluacion = evaluacion + evaluarCaballo(tmp);
-            evaluacion = evaluacion + evaluarAlfil(tmp);
-            evaluacion = evaluacion + evaluarTorre(tmp);
-            evaluacion = evaluacion + evaluarReina(tmp);
-        }
+        int evaluacion = 0;
+        evaluacion = evaluacion + evaluarPeones(tablero);
+        evaluacion = evaluacion + evaluarCaballo(tablero);
+        evaluacion = evaluacion + evaluarAlfil(tablero);
+        evaluacion = evaluacion + evaluarTorre(tablero);
+        evaluacion = evaluacion + evaluarReina(tablero);
+        tablero.setFuncionUtilidad(evaluacion);
     }
 
     private int evaluarPeones(nodoTablero pTablero) {
