@@ -19,12 +19,12 @@ public class nodoTablero {
     public LinkedList<nodoTablero> hijos;
     private int funcionUtilidad;
     public boolean turno;
-    public minimax mm;
+    //public minimax mm;
     public heuristica heu;
     public boolean esTerminal;//true si es hoja
 
     public nodoTablero(){
-        mm = new minimax();
+        //mm = new minimax();
         heu = new heuristica();
         hijos = new LinkedList<nodoTablero>();
         inicializarTablero();
@@ -171,7 +171,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j + 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j] = 10;
                 Ttablero[i + 1][j + 1] = pieza;
                 nodoTablero nodo = new nodoTablero();
@@ -186,7 +186,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j - 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j] = 10;
                 Ttablero[i + 1][j - 1] = pieza;
                 nodoTablero nodo = new nodoTablero();
@@ -201,7 +201,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j] = 10;
                 Ttablero[i + 1][j] = pieza;
                 nodoTablero nodo = new nodoTablero();
@@ -216,7 +216,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j - 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j] = 10;
                 Ttablero[i - 1][j - 1] = pieza;
                 nodoTablero nodo = new nodoTablero();
@@ -231,7 +231,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j + 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j] = 10;
                 Ttablero[i - 1][j + 1] = pieza;
                 nodoTablero nodo = new nodoTablero();
@@ -246,7 +246,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j] = 10;
                 Ttablero[i - 1][j] = pieza;
                 nodoTablero nodo = new nodoTablero();
@@ -263,7 +263,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][j] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -277,7 +277,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][j] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -291,7 +291,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -305,7 +305,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -322,7 +322,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -336,7 +336,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -350,7 +350,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -364,7 +364,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -381,7 +381,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j + 2, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i + 1][j + 2] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -395,7 +395,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j + 2, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i - 1][j + 2] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -409,7 +409,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 2, j + 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i + 2][j + 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -423,7 +423,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 2, j + 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i - 2][j + 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -437,7 +437,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 2, j - 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i - 2][j - 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -451,7 +451,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j - 2, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i + 1][j - 2] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -465,7 +465,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 2, j - 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i + 2][j - 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -479,7 +479,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j - 2, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i - 1][j - 2] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -496,7 +496,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][j] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -510,7 +510,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][j] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -524,7 +524,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -538,7 +538,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -552,7 +552,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -566,7 +566,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -580,7 +580,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -594,7 +594,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, x, y, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[x][y] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -612,7 +612,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i + 1][j] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -627,7 +627,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j - 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i + 1][j - 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -642,7 +642,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i, j - 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j - 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -657,7 +657,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j - 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i - 1][j - 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -672,7 +672,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i - 1][j] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -687,7 +687,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i - 1, j + 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i - 1][j + 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -702,7 +702,7 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i, j + 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i][j + 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
@@ -717,13 +717,24 @@ public class nodoTablero {
             if(heu.getValidacionPieza(i, j, i + 1, j + 1, posicionPiezas, pieza))
             {
                 int Ttablero[][] = new int[8][8];
-                Ttablero = posicionPiezas;
+                copy_data(posicionPiezas,Ttablero);
                 Ttablero[i + 1][j + 1] = pieza;
                 Ttablero[i][j] = 10;
                 nodoTablero nodo = new nodoTablero();
                 establecerTurno(nodo);
                 nodo.posicionPiezas = Ttablero;
                 hijos.add(nodo);
+            }
+        }
+    }
+
+    public void copy_data(int[][] source, int[][] destiny)
+    {
+        for(int i = 0; i < source.length; i++)
+        {
+            for(int j = 0; j < source.length; j++)
+            {
+                destiny[i][j] = source[i][j];
             }
         }
     }
