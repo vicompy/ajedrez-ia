@@ -22,6 +22,7 @@ public class nodoTablero {
     public minimax mm;
     public heuristica heu;
     public boolean esTerminal;//true si es hoja
+
     public nodoTablero(){
         mm = new minimax();
         heu = new heuristica();
@@ -29,6 +30,14 @@ public class nodoTablero {
         inicializarTablero();
         padre = null;
         esTerminal = false;
+    }
+
+    public int[][] getPosicionPiezas() {
+        return posicionPiezas;
+    }
+
+    public void setPosicionPiezas(int[][] posicionPiezas) {
+        this.posicionPiezas = posicionPiezas;
     }
 
     public void setTurno(boolean turno){
