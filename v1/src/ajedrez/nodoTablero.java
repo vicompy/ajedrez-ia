@@ -23,7 +23,7 @@ public class nodoTablero {
     public boolean esTerminal;//true si es hoja
 
     public nodoTablero(){
-        heu = new heuristica();
+        heu = heuristica.getHeuristica();//new heuristica();
         hijos = new LinkedList<nodoTablero>();
         inicializarTablero();
         padre = null;
@@ -51,7 +51,17 @@ public class nodoTablero {
         funcionUtilidad = func;
     }
     public int getFuncionUtilidad(){
-        heu.funcionEvaluacion(this, turno);
+        int negras = heu.funcionEvaluacion(this, turno);
+        if(turno == true)
+            turno = false;
+        else
+            turno = true;
+        int blancas = heu.funcionEvaluacion(this, turno);
+        if(turno == true)
+            turno = false;
+        else
+            turno = true;
+        funcionUtilidad = negras - blancas;
         return funcionUtilidad;
     }
 
