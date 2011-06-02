@@ -16,8 +16,15 @@ public class heuristica {
     int oX, oY, dX, dY;
     int tablero[][];
     constantes c = new constantes();
+    static private heuristica heu = null;
 
     public heuristica() {
+    }
+
+    static public heuristica getHeuristica(){
+        if(heu == null)
+            heu = new heuristica();
+        return heu;
     }
 
     public int isJaque(int tipo, int turno) {
@@ -62,7 +69,7 @@ public class heuristica {
 
     }
 
-    public void funcionEvaluacion(nodoTablero tablero, boolean turno) {
+    public int funcionEvaluacion(nodoTablero tablero, boolean turno) {
         //para turno true -> blanco; false -> negro
         int evaluacion = 0;
         evaluacion = evaluacion + evaluarPeones(tablero);
@@ -70,7 +77,8 @@ public class heuristica {
         evaluacion = evaluacion + evaluarAlfil(tablero);
         evaluacion = evaluacion + evaluarTorre(tablero);
         evaluacion = evaluacion + evaluarReina(tablero);
-        tablero.setFuncionUtilidad(evaluacion);
+        //tablero.setFuncionUtilidad(evaluacion);
+        return evaluacion;
     }
 
     private int evaluarPeones(nodoTablero pTablero) {
@@ -78,7 +86,7 @@ public class heuristica {
         if (pTablero.turno == true) {
             //piezas blancas
             for (int i = 0; i < 8; i++) {
-                for (int j = 0; i < 8; j++) {
+                for (int j = 0; j < 8; j++) {
                     if (pTablero.posicionPiezas[i][j] == 1) {
                         //si se encuentra una pieza sumar 100
                         eval = eval + 100;

@@ -44,30 +44,44 @@ public class minimax {
 
     private int valorMax(nodoTablero nodo, int prof, int al, int be){
 	nodo.generarHijos();
-	if(nodo.hijos == null || prof == 0){
+	if(nodo.hijos.size() == 0 || prof == 0){
+                nodo.hijos = null;
+                //Runtime.getRuntime().gc();
 		return nodo.getEvaluacion();
 	}
 	else{
 		for(int i = 0; i < nodo.hijos.size(); i++){
                     al = Math.max(al, valorMin(nodo.hijos.get(i), prof - 1, al, be));
-                    if(al >= be)
+                    if(al >= be){
+                        nodo.hijos = null;
+                        //Runtime.getRuntime().gc();
                         return be;
+                    }
 		}
+                nodo.hijos = null;
+                //Runtime.getRuntime().gc();
                 return al;
 	}
     }
 
     private int valorMin(nodoTablero nodo, int prof, int al, int be){
 	nodo.generarHijos();
-	if(nodo.hijos == null || prof == 0){
+	if(nodo.hijos.size() == 0 || prof == 0){
+                nodo.hijos = null;
+                //Runtime.getRuntime().gc();
 		return nodo.getEvaluacion();
 	}
 	else{
 		for(int i = 0; i < nodo.hijos.size(); i++){
                     be = Math.min(be, valorMax(nodo.hijos.get(i), prof - 1, al, be));
-                    if(al >= be)
+                    if(al >= be){
+                        nodo.hijos = null;
+                        //Runtime.getRuntime().gc();
                         return al;
+                    }
 		}
+                nodo.hijos = null;
+                //Runtime.getRuntime().gc();
                 return be;
 	}
 

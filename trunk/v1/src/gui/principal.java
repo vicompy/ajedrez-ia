@@ -33,8 +33,8 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     private int wComidas = 0;
     private int bComidas = 0;
     private int turno = c.HUMANO;
-    private heuristica heu = new heuristica();
-    private minimax minmax = new minimax();
+    private heuristica heu = heuristica.getHeuristica();//new heuristica();
+    //private minimax minmax = new minimax();
 
     /** Creates new form principal */
     public principal() {
@@ -219,11 +219,28 @@ public class principal extends javax.swing.JFrame implements ActionListener {
     }
 
     private void tiraPC() {
-        tLogico = minmax.minimaxEval(1, tLogico);
+        minimax minmax = new minimax();
+        tLogico = minmax.minimaxEval(3, tLogico);
         repaintPiezas(tLogico);
         turno = c.HUMANO;
         lbl_turno.setText("BLANCAS - Humano");
         setLog("Turno: BLANCAS - Humano");
+        minmax = null;
+        liberarMemoria();
+    }
+
+    private void liberarMemoria(){
+        try{
+            System.out.println("Inicio de limpieza de memoria");
+            Runtime garbage = Runtime.getRuntime();
+            System.out.println("Memoria total de JVM " + garbage.totalMemory());
+            System.out.println("Memoria libre antes de liberar " + garbage.freeMemory());
+            garbage.gc();
+            System.out.println("Memoria libre despues de liberar " + garbage.freeMemory());
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
