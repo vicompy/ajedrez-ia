@@ -218,9 +218,12 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         }
     }
 
-    private void tiraPC(){
-        tLogico = minmax.minimaxEval(3,tLogico);
+    private void tiraPC() {
+        tLogico = minmax.minimaxEval(1, tLogico);
         repaintPiezas(tLogico);
+        turno = c.HUMANO;
+        lbl_turno.setText("BLANCAS - Humano");
+        setLog("Turno: BLANCAS - Humano");
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -281,11 +284,11 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                 //heu.generateChilds(tLogico, tipoO);
 
                 //comprueba si se esta en jaque
-                int jaque = heu.isJaque(tipoO,turno);
-                if(jaque==c.HUMANO){
+                int jaque = heu.isJaque(tipoO, turno);
+                if (jaque == c.HUMANO) {
                     JOptionPane.showMessageDialog(null, "Jaque a Blancas");
                     setLog("Jaque a Blancas");
-                }else if(jaque==c.PC){
+                } else if (jaque == c.PC) {
                     JOptionPane.showMessageDialog(null, "Jaque a Negras");
                     setLog("Jaque a Negras");
                 }
