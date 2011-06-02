@@ -19,17 +19,16 @@ public class nodoTablero {
     public LinkedList<nodoTablero> hijos;
     private int funcionUtilidad;
     public boolean turno;
-    //public minimax mm;
     public heuristica heu;
     public boolean esTerminal;//true si es hoja
 
     public nodoTablero(){
-        //mm = new minimax();
         heu = new heuristica();
         hijos = new LinkedList<nodoTablero>();
         inicializarTablero();
         padre = null;
         esTerminal = false;
+        turno = false;
     }
 
     public int[][] getPosicionPiezas() {
