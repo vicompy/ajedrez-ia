@@ -218,10 +218,19 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         }
     }
 
+    private void returnMovimiento(int oX, int oY, int dX, int dY, int tLogico, int tipoO) {
+    }
+
     private void tiraPC() {
         minimax minmax = new minimax();
+        int tCopy[][] = tLogico;
         tLogico = minmax.minimaxEval(3, tLogico);
         repaintPiezas(tLogico);
+        int posiciones[] = compareTableros(tCopy, tLogico);
+        if (posiciones[4] == -1000 && posiciones[5] == -1000) {
+            paintPiezaComida(tCopy[posiciones[2]][posiciones[3]], turno);
+
+        }
         turno = c.HUMANO;
         lbl_turno.setText("BLANCAS - Humano");
         setLog("Turno: BLANCAS - Humano");
@@ -229,17 +238,38 @@ public class principal extends javax.swing.JFrame implements ActionListener {
         liberarMemoria();
     }
 
-    private void liberarMemoria(){
-        try{
+    private int[] compareTableros(int[][] copia, int[][] nuevo) {
+
+        int posiciones[] = new int[6];
+
+        for (int i = 0; i < 8; i++) {
+            for (int k = 0; k < 8; k++) {
+                if (copia[i][k] != nuevo[i][k]) {
+                    // if (tGui[dX][dY].getTipo() >= 1 && tGui[dX][dY].getTipo() <= 6) {//comio una blanca
+                    if (copia[i][k] >= 1 && copia[i][k] <= 6) {//destino era una blanca
+                        posiciones[2] = i;
+                        posiciones[3] = k;
+                        posiciones[4] = -1000;
+                    } else if (copia[i][k] >= -6 && copia[i][k] <= -1) {//inicio negra
+                        posiciones[0] = i;
+                        posiciones[1] = k;
+                        posiciones[5] = -1000;
+                    }
+                }
+            }
+        }
+        return posiciones;
+    }
+
+    private void liberarMemoria() {
+        try {
             System.out.println("Inicio de limpieza de memoria");
             Runtime garbage = Runtime.getRuntime();
             System.out.println("Memoria total de JVM " + garbage.totalMemory());
             System.out.println("Memoria libre antes de liberar " + garbage.freeMemory());
             garbage.gc();
             System.out.println("Memoria libre despues de liberar " + garbage.freeMemory());
-        }
-        catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
         }
     }
 
@@ -273,7 +303,7 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                     lbl_turno.setText("NEGRAS - PC");
 
                 } else {
-                    if (tGui[dX][dY].getTipo() >= 1 && tGui[dX][dY].getTipo() <= 6) {//comio una negra
+                    if (tGui[dX][dY].getTipo() >= 1 && tGui[dX][dY].getTipo() <= 6) {//comio una blanca
                         paintPiezaComida(temp.getTipo(), turno);
                     }
                     turno = c.HUMANO;
