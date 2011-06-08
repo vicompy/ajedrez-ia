@@ -4,9 +4,6 @@
  */
 package ajedrez;
 
-import java.util.LinkedList;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author William
@@ -21,9 +18,10 @@ public class heuristica {
     public heuristica() {
     }
 
-    static public heuristica getHeuristica(){
-        if(heu == null)
+    static public heuristica getHeuristica() {
+        if (heu == null) {
             heu = new heuristica();
+        }
         return heu;
     }
 
@@ -55,9 +53,9 @@ public class heuristica {
             for (j = 0; j < 8; j++) {
                 if (getValidacionPieza(i, j, Xtablero, Ytablero, tablero, tablero[i][j])) {
 
-                    if(turno==c.HUMANO){
+                    if (turno == c.HUMANO) {
                         return c.HUMANO;
-                    }else if(turno==c.PC){
+                    } else if (turno == c.PC) {
                         return c.PC;
                     }
                 }
@@ -69,7 +67,37 @@ public class heuristica {
 
     }
 
+    public int isJaqueMate(int turno) {
+        int tCopy[][] = this.tablero;
+
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+
+                if (tablero[i][j] != c.CASILLA_VACIA) {
+                    for (int k = 0; k < 8; k++) {
+                        for (int l = 0; l < 8; l++) {
+                            if (getValidacionPieza(i, j, k, l, tablero, tablero[i][j])) {
+                                //hago el movimiento
+//                                if(isJaque(tablero[k][l], turno)){
+                                    //hay jaque mate
+
+//                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+        this.tablero = tCopy;
+
+        return -1;
+    }
+
     public int funcionEvaluacion(nodoTablero tablero, boolean turno) {
+
         //para turno true -> blanco; false -> negro
         int evaluacion = 0;
         evaluacion = evaluacion + evaluarPeones(tablero);
