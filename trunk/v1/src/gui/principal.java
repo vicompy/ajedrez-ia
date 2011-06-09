@@ -231,6 +231,9 @@ public class principal extends javax.swing.JFrame implements ActionListener {
             paintPiezaComida(tCopy[posiciones[2]][posiciones[3]], turno);
 
         }
+
+//        setLog(c.getPiezaNombre(tipoO) + " se mueve de X:" + oX + ", Y:" + oY
+//                        + " a X:" + dX + ", Y:" + dY);
         turno = c.HUMANO;
         lbl_turno.setText("BLANCAS - Humano");
         setLog("Turno: BLANCAS - Humano");
@@ -335,9 +338,11 @@ public class principal extends javax.swing.JFrame implements ActionListener {
                 if (jaque == c.HUMANO) {
                     JOptionPane.showMessageDialog(null, "Jaque a Blancas");
                     setLog("Jaque a Blancas");
+                   // heu.isJaqueMate(c.HUMANO);
                 } else if (jaque == c.PC) {
                     JOptionPane.showMessageDialog(null, "Jaque a Negras");
                     setLog("Jaque a Negras");
+                    //heu.isJaqueMate(c.PC);
                 }
             }
             release = false;
