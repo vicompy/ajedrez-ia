@@ -70,7 +70,6 @@ public class heuristica {
     public int isJaqueMate(int turno) {
         int tCopy[][] = this.tablero;
 
-
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
 
@@ -79,10 +78,12 @@ public class heuristica {
                         for (int l = 0; l < 8; l++) {
                             if (getValidacionPieza(i, j, k, l, tablero, tablero[i][j])) {
                                 //hago el movimiento
-//                                if(isJaque(tablero[k][l], turno)){
-                                    //hay jaque mate
+                                tablero[k][l] = tablero[i][j];
+                                tablero[i][j] = c.CASILLA_VACIA;
+                                if(isJaque(tablero[k][l], turno)!=-10000){
+                                    javax.swing.JOptionPane.showMessageDialog(null, "Jaque Mate");
 
-//                                }
+                                }
                             }
                         }
                     }
